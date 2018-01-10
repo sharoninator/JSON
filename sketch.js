@@ -1,23 +1,17 @@
+ar song;
 
-//         // setInterval(function() {
-//         //     $.get("http://api.open-notify.org/iss-now.json", function(data) {
-//         //         console.log(data.iss_position.latitude);
-//         //                         console.log(data.iss_position.longitude);
-//         //     });
-//         // }, 1000);
-// $.get( "http://api.open-notify.org/iss-now.json", function( data ) {
-//   console.log(data);
-// });
-//issX = (width/360) * (180 + long);      
-//issY = (height/180) * (90 - lat);
-var ISS;
-var bg;
 function setup() {
-    ISS = loadImage("http://freepngimages.com/wp-content/uploads/2015/12/international-space-station-transparent-background.png");
-bg = loadImage("https://geology.com/world/world-map.gif");
-  createCanvas(1200, 715);
+  song = loadSound('Downloads/thisDot.mp3');
+  createCanvas(720, 200);
+  background(255,0,0);
 }
 
-function draw() {
-  background(bg);
+function mousePressed() {
+  if ( song.isPlaying() ) { // .isPlaying() returns a boolean
+    song.stop();
+    background(255,0,0);
+  } else {
+    song.play();
+    background(0,255,0);
+  }
 }
