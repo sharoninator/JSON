@@ -1,4 +1,4 @@
-ar song;
+var song;
 
 function setup() {
   song = loadSound('test.mp3');
