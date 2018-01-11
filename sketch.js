@@ -1,7 +1,7 @@
 ar song;
 
 function setup() {
-  song = loadSound('Downloads/thisDot.mp3');
+  song = loadSound('test.mp3');
   createCanvas(720, 200);
   background(255,0,0);
 }
