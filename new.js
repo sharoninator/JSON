@@ -17,6 +17,7 @@ var y;
    coords.innerHTML = "Latitude: " + data.iss_position.latitude + " Longitude: "  + data.iss_position.longitude;
       background(bg); 
     ellipse(x,y,30,30);
+   createP("Latitude: " + data.iss_position.latitude + " Longitude: " + data.iss_position.longitude);
                               
 });
   } 
