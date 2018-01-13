@@ -15,9 +15,9 @@ function setup(){
   var vol = map(mic.getLevel(),0,1,1,slider.value());
   if(vol > 90){
     vol = 90;
-      ellipse(300,385,230,90);
+      ellipse(350,385,201.25,90);
   } else{
-      ellipse(300,385,230,vol);
+      ellipse(350,385,201.25,vol);
   }
 
 
