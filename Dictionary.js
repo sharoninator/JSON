@@ -1,7 +1,24 @@
-for(var i =0;i<2000;i++){
-$.get( "https://qrng.anu.edu.au/API/jsonI.php?length= + i + "&type=uint8&#8217", function( data ) {
-           var num = data[0];  
-        createP(data.success);
-});
+var mic
+var bg;
+var slider;
+function setup(){
+     bg = loadImage("http://jzool-prd.s3.amazonaws.com/img/17179/m.jpg?1360320930");
+  createCanvas(800,800);
+  mic = new p5.AudioIn();
+  mic.start();
+  createP("Microphone sensitivity");
+  slider = createSlider(0,10000,2000,1);
+} function draw(){
+   background(bg);
+     fill(40,40,40);
+     noStroke();
+  var vol = map(mic.getLevel(),0,1,1,slider.value());
+  if(vol > 90){
+    vol = 90;
+      ellipse(400,440,230,90);
+  } else{
+      ellipse(400,440,230,vol);
+  }
+
 
 }
