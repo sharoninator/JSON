@@ -2,7 +2,7 @@ var mic
 var bg;
 var slider;
 function setup(){
-     bg = loadImage("http://jzool-prd.s3.amazonaws.com/img/17179/m.jpg?1360320930");
+     bg = loadImage("faceBank.jpg");
   createCanvas(800,800);
   mic = new p5.AudioIn();
   mic.start();
