@@ -7,5 +7,5 @@ sel = createSelect();
   sel.changed(choosePage);
 }
 function choosePage(){
-document.getElementById("choose").src = sel.option.value();
+document.getElementById("choose").src = sel.value();
 }
