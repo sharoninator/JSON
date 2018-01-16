@@ -5,7 +5,7 @@ function draw(){
   stroke(255);
 noFill();
   drawCircle(300,200,300);
-
+createP("1");
 }
 function drawCircle(x,y,d){
 scale(1.2);
