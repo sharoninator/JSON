@@ -1,15 +1,14 @@
-var zoom = 300;
+
 function draw(){
   createCanvas(800,800);
   background(51);
   stroke(255);
 noFill();
-  drawCircle(300,200,zoom);
-  zoom+=200;
-  console.log(zoom);
+  drawCircle(300,200,300);
+
 }
 function drawCircle(x,y,d){
-scale(1.0001001);
+scale(1.2);
 ellipse(x,y,d);
 if(d>2){
 
