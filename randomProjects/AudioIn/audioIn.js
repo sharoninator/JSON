@@ -2,6 +2,7 @@ var mic
 var bg;
 var slider;
 function setup(){
+     alert("Enable your micprohone to use the features of this website to the fullest. Press the lock on the top left. ");
      bg = loadImage("faceBank.jpg");
   createCanvas(700,700);
   mic = new p5.AudioIn();
