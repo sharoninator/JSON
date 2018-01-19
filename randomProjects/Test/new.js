@@ -1,7 +1,8 @@
 var bird;
 var bg = true;
-var num = 40;
+var num = parseFloat(prompt("Enter number of balls: "));
 var birds = [];
+
 function setup() {
     createCanvas(600, 600);
     for (var i = 0; i < num; i++) { 
@@ -52,11 +53,11 @@ function Bird(x, y, i) {
         }
 
         if (this.x < 0 || this.x > width) {
-            this.xSpeed = this.xSpeed * random(-0.5,-5);
+            this.xSpeed = this.xSpeed * -1;
             //console.log(this.xSpeed + " " + this.index);            
         }
         if (this.y < 0 || this.y > height) {
-            this.ySpeed = this.ySpeed * random(-0.5,-5);
+            this.ySpeed = this.ySpeed * -1;
             //console.log(this.ySpeed + " " + this.index);
         }
         this.x += this.xSpeed;
