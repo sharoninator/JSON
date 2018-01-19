@@ -22,7 +22,7 @@ function draw() {
     background(255);
   } 
     for (var j = 0; j < num; j++) { // from 1 to 10
-birds["bird" + i].moveBall();
+birds["bird" + j].moveBall();
     }
 }
 
