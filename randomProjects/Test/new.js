@@ -1,8 +1,9 @@
 var bird;
 var bg = true;
-var num = 40;
+var num;
 var birds = [];
 function setup() {
+  num =  prompt("Number of balls: ").parseInt();
     createCanvas(600, 600);
     for (var i = 0; i < num; i++) { // from 1 to 10
         birds["bird" + i] = new Bird();
