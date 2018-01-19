@@ -1,33 +1,71 @@
 var bird;
-function setup(){
-  createCanvas(600,600);
-bird = new Bird();
+var bg = true;
+var num = 40;
 
+function setup() {
+    createCanvas(600, 600);
+    for (var i = 0; i < num; i++) { // from 1 to 10
+        window["bird" + i] = new Bird(random(0, width), random(0, height), i);
+    }
+    var button = createButton("Background");
+button.mousePressed(toggleBackground);
+var amount = createSlider(0,100,1,20);
 }
-function draw(){
-  background(51);
-
-bird.moveBall();
+function toggleBackground(){
+  if (!bg){
+    bg = true;
+  } else{
+    bg = false;
   }
-
+}
+function draw() {
+  if(bg == true){
+    background(255);
+  } 
+    for (var j = 0; j < num; j++) { // from 1 to 10
+        window["bird" + j].moveBall();
+    }
+}
 
 //Bird object //
-function Bird(){
-  this.y = 403;
-  this.x = 43;
-  this.d=30
- this.moveBall = function(){
-    this.x+=10;
-  
-    ellipse(this.x,this.y,this.d);
-    if(this.x < 0   || this.x > width){
-      this.x = this.x - 30
-      this.x = this.x  *-1;
+function Bird(x, y, i) {
+    this.ySpeed = random(0, 1);
+    this.xSpeed = random(0, 1);
+    this.x = x;
+    this.y = y;
+    this.index = i;
+    this.d = 25;
+    this.color = {
+        r: random(255),
+        g: random(255),
+        b: random(255),
+    };
+    this.moveBall = function(x, y) {
+        if (this.ySpeed > 0.5) {
+            this.ySpeed = 5;
+        } else {
+            this.ySpeed = -5;
+        }
+        if (this.xSpeed > 0.5) {
+            this.xSpeed = 5;
+        } else {
+            this.xSpeed = -5;
+        }
+
+        if (this.x < 0 || this.x > width) {
+            this.xSpeed = this.xSpeed * random(-0.5,-5);
+            //console.log(this.xSpeed + " " + this.index);            
+        }
+        if (this.y < 0 || this.y > height) {
+            this.ySpeed = this.ySpeed * random(-0.5,-5);
+            //console.log(this.ySpeed + " " + this.index);
+        }
+        this.x += this.xSpeed;
+        this.y += this.ySpeed;
+        fill(this.color.r, this.color.g, this.color.b);
+        noStroke();
+        ellipse(this.x, this.y, this.d);
+        
     }
-        if(this.y <  0|| this.y > height){
-      this.y = this.y* -1;
-    } 
-}
 
 }
-
