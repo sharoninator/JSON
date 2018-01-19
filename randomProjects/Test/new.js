@@ -1,15 +1,14 @@
 var bird;
 var bg = true;
 var num = 40;
-
+var birds = [];
 function setup() {
     createCanvas(600, 600);
     for (var i = 0; i < num; i++) { // from 1 to 10
-        window["bird" + i] = new Bird(random(0, width), random(0, height), i);
+        birds["bird" + i] = new Bird();
     }
     var button = createButton("Background");
 button.mousePressed(toggleBackground);
-var amount = createSlider(0,100,1,20);
 }
 function toggleBackground(){
   if (!bg){
@@ -23,7 +22,7 @@ function draw() {
     background(255);
   } 
     for (var j = 0; j < num; j++) { // from 1 to 10
-        window["bird" + j].moveBall();
+birds["bird" + i].moveBall();
     }
 }
 
