@@ -4,12 +4,15 @@ var num = 40;
 var birds = [];
 function setup() {
     createCanvas(600, 600);
-    for (var i = 0; i < num; i++) { // from 1 to 10
+    for (var i = 0; i < num; i++) { 
         birds["bird" + i] = new Bird();
     }
     var button = createButton("Background");
 button.mousePressed(toggleBackground);
 }
+
+
+
 function toggleBackground(){
   if (!bg){
     bg = true;
@@ -17,14 +20,20 @@ function toggleBackground(){
     bg = false;
   }
 }
+
+
+
 function draw() {
   if(bg == true){
     background(255);
   } 
-    for (var j = 0; j < num; j++) { // from 1 to 10
+    for (var j = 0; j < num; j++) { 
 birds["bird" + j].moveBall();
     }
 }
+
+
+
 
 //Bird object //
 function Bird(x, y, i) {
@@ -39,6 +48,9 @@ function Bird(x, y, i) {
         g: random(255),
         b: random(255),
     };
+    
+    
+    
     this.moveBall = function(x, y) {
         if (this.ySpeed > 0.5) {
             this.ySpeed = 5;
@@ -66,5 +78,7 @@ function Bird(x, y, i) {
         ellipse(this.x, this.y, this.d);
         
     }
+    
+    
 
 }
