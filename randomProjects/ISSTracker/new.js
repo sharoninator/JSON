@@ -3,7 +3,7 @@
 var y;
     function setup() {
 
-    bg = loadImage("https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Simple_world_map.svg/2000px-Simple_world_map.svg.png");
+    bg = loadImage("https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/World_map_green.png/1200px-World_map_green.png");
    bg.resize(1520, 817);
     createCanvas(1520, 817);
    
