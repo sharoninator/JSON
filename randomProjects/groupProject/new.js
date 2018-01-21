@@ -1,6 +1,7 @@
 var ball1;
 var left;
 var right;
+var isRight;
 function setup(){
   createCanvas(600,600);
    ball1 = new Ball();
@@ -12,14 +13,14 @@ function draw(){
 ball1.move();
 
   ball1.bounce();
-left.update(0,mouseY,10,100);
-right.update(590, ball1.y-50, 10,100);
+left.update(0,mouseY,10,100, false);
+right.update(590, ball1.y-50, 10,100 , true);
  
 }
 
 function Ball(){
-this.xSpeed = 5;
-this.ySpeed = 5;
+this.xSpeed = 7;
+this.ySpeed = 7;
   this.x = 200;
   this.y = 200;
   this.d = 30;
@@ -63,7 +64,7 @@ this.x = random(0, width);
     
     function Paddle(){
       
-      this.update = function(x,y,width,height){
+      this.update = function(x,y,width,height, isRight){
               this.x = x;
 
 this.width = width;
@@ -73,8 +74,11 @@ if(this.y > 600 - this.height){
   this.y = 600 - this.height;
   console.log(right.y);
 }
+if(isRight){
 
-        fill(125);
+}
+
+        fill(175);
         noStroke();
         rect(this.x, this.y,this.width,this.height);
       
