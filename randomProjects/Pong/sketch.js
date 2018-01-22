@@ -2,7 +2,8 @@ var ball1;
 var left;
 var right;
 var isRight;
-var score = 0;
+var score1 = 0;
+var score2 = 0;
 var diff;
 var range;
       var newRightLoc = 250;
@@ -23,7 +24,8 @@ ball1.lose();
        right.rightY();
 
   textSize(25);
-  text(score.toString(),width/2,25 );
+   text(score1.toString(),width/4,25 );
+    text(score2.toString(),width/2 + width / 4,25 );
 }
 
 function Ball(){
@@ -37,7 +39,8 @@ function Ball(){
     if(this.x + this.d / 2 >= right.x - right.width / 2 && // collision for right paddle
        this.y <right.y + right.height &&
        this.y> right.y - right.height ){
-if( right.y - ball1.y >-10){
+        
+if( right.y - ball1.y >0){
 ball1.lose();
 
 } else{
@@ -53,7 +56,7 @@ ball1.lose();
          this.y <left.y + left.height &&
          this.y> left.y - left.height /2){
             this.xSpeed = this.xSpeed * -1;
-            score++;
+        
             // var a = 1;
             // var b = 5;
             // map(this.y, left.y + left.height/2, left)
@@ -80,13 +83,21 @@ ball1.lose();
         ellipse(this.x, this.y, this.d);
       }
       this.lose = function(){
-        if (this.x < 0 || this.x > width) {
-          this.x = 300;//random(0, width);
-          this.y = 300;//random(0,height);
-          score = 0;
-          this.ySpeed = 0;
+        if (this.x < 0 ) {
+          score2++;
+             this.ySpeed = 0; 
+                    this.x = 300;//random(0, width);
+          this.y = 300;
+     
+          } else if(this.x > width){
+            score1++;
+               this.ySpeed = 0; 
+                    this.x = 300;//random(0, width);
+          this.y = 300;
+          }
+            //random(0,height);
 
-        }
+        
       }
 }
 
