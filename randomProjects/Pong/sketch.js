@@ -114,9 +114,9 @@ ball1.lose();
     this.rightY = function(){
       rightDist = this.y - ball1.y +50;
       if(rightDist < 0){
-         newRightLoc = this.y  + 4.5;
+         newRightLoc = this.y  + Math.abs(range);
       } else{
-        newRightLoc = this.y  - 4.5;
+        newRightLoc = this.y  - Math.abs(range);
       }
     }
   }
