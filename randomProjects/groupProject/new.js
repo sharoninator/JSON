@@ -37,7 +37,7 @@ function Ball(){
     if(this.x + this.d / 2 >= right.x - right.width / 2 && // collision for right paddle
        this.y <right.y + right.height &&
        this.y> right.y - right.height ){
-if( right.y - ball1.y >0){
+if( right.y - ball1.y >10){
 ball1.lose();
 
 } else{
@@ -114,9 +114,9 @@ ball1.lose();
     this.rightY = function(){
       rightDist = this.y - ball1.y +50;
       if(rightDist < 0){
-         newRightLoc = this.y  + 5;
+         newRightLoc = this.y  + 4.8;
       } else{
-        newRightLoc = this.y  - 5;
+        newRightLoc = this.y  - 4.8;
       }
     }
   }
