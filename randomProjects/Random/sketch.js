@@ -37,7 +37,6 @@ r: random(255),
     this.x+=xSpeed;
     this.y+=ySpeed;
     fill(this.colors.r,this.colors.g,this.colors.b);
-    noStroke();
     ellipse(this.x, this.y,this.d);
     
   }
