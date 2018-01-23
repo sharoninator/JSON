@@ -4,7 +4,7 @@ var mag;
 var num = parseFloat(prompt("Enter number of balls "));
 function setup() {
    mag = createSlider(0,20,2,0.01);
-createCanvas(width,height);
+createCanvas(600,600);
  for(var i=1;i<=num;i++){
    ball[i] = new Ball(random(600),random(600));
  }
