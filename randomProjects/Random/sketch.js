@@ -32,7 +32,8 @@ console.log("work");
     this.ySpeed = ySpeed;
     this.x+=xSpeed;
     this.y+=ySpeed;
-    fill(random(255),random(255),random(255))
+    fill(random(255),random(255),random(255));
+    noStroke();
     ellipse(this.x, this.y,this.d);
     
   }
