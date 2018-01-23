@@ -24,15 +24,19 @@ class Ball{
 this.x = x;
 this.y = y;
 this.d = 30;
-console.log("work");
-    
+
+this.colors = {
+r: random(255),
+  g:random(255),
+  b: random(255)
+};    
   }
   drawBall(xSpeed,ySpeed){
     this.xSpeed = xSpeed;
     this.ySpeed = ySpeed;
     this.x+=xSpeed;
     this.y+=ySpeed;
-    fill(random(255),random(255),random(255));
+    fill(this.colors.r,this.colors.g,this.colors.b);
     noStroke();
     ellipse(this.x, this.y,this.d);
     
