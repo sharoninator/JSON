@@ -6,6 +6,7 @@ var img;
 var ship
 var Lasers = [];
 var lasernum = 0;
+var shot = false;
 function preload(){
     img = loadImage("ship.png");
 }
@@ -15,7 +16,14 @@ ship = new Spaceship();
 
 }
 function draw(){
-
+  background(51);
+if(shot){
+fill(255, 94, 0);
+rect(Lasers[lasernum].initX,Lasers[lasernum].initY,10,40)
+for(var i=1;i<=lasernum;i++){
+  Lasers[lasernum].initY-=3;
+}
+}
 ship.show();
 if(keyIsDown(LEFT_ARROW)){
   ship.moveX(-5);
@@ -45,12 +53,9 @@ class Laser{
   constructor(initX,initY){
     this.initX = initX;
     this.initY = initY;
+    shot = true;
   }
-  fired(){
-    background(51);
-  fill(255, 94, 0);
-  rect(this.initX,this.initY,10,40)
-}
+
 }
 
 
@@ -64,7 +69,7 @@ class Spaceship{
   shoot(initX,initY){
 lasernum++;
 Lasers[lasernum] = new Laser(initX,initY);
-Lasers[lasernum].fired();
+
 
   }
 
