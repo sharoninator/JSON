@@ -1,5 +1,6 @@
 "use strict";
-
+//SPACE SHOOTER!!!!
+//By gorgamite
 var Asteroids = [];
 var x = 0;
 var img;
