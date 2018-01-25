@@ -19,10 +19,12 @@ function draw(){
   background(51);
 if(shot){
 fill(255, 94, 0);
-rect(Lasers[lasernum].initX,Lasers[lasernum].initY,10,40)
 for(var i=1;i<=lasernum;i++){
-  Lasers[lasernum].initY-=3;
+  console.log(Lasers[i].initY)
+    Lasers[i].initY+=Lasers[i].ySpeed;
+rect(Lasers[i].initX,Lasers[i].initY,10,40)
 }
+
 }
 ship.show();
 if(keyIsDown(LEFT_ARROW)){
@@ -53,6 +55,7 @@ class Laser{
   constructor(initX,initY){
     this.initX = initX;
     this.initY = initY;
+    this.ySpeed = -5;
     shot = true;
   }
 
