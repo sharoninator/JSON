@@ -3,7 +3,9 @@
 
 var x = 0;
 var img;
-var ship;
+var ship
+var Lasers = [];
+var lasernum = 0;
 function preload(){
     img = loadImage("ship.png");
 }
@@ -13,28 +15,41 @@ ship = new Spaceship();
 
 }
 function draw(){
-  background(51);
+
 ship.show();
+if(keyIsDown(LEFT_ARROW)){
+  ship.moveX(-5);
+}
+if(keyIsDown(RIGHT_ARROW)){
+  ship.moveX(5);
+}
+if(keyIsDown(UP_ARROW)){
+  ship.moveY(-5);
+}
+if(keyIsDown(DOWN_ARROW)){
+  ship.moveY(5);
 }
 
-function keyReleased(){
-  ship.moveX(0);
-  ship.moveY(0);
+
+
 }
+
 function keyPressed(){
-  if (keyCode === LEFT_ARROW) {
-    ship.moveX(-5);
+if(keyCode === 32){
+ship.shoot(ship.x, ship.y);
+}
+
+}
+
+class Laser{
+  constructor(initX,initY){
+    this.initX = initX;
+    this.initY = initY;
   }
-    if (keyCode === RIGHT_ARROW) {
-      ship.moveX(5);
-}
-
-  if (keyCode === UP_ARROW) {
-ship.moveY(-5);
-}
-  if (keyCode === DOWN_ARROW) {
-ship.moveY(5);
-
+  fired(){
+    background(51);
+  fill(255, 94, 0);
+  rect(this.initX,this.initY,10,40)
 }
 }
 
@@ -45,12 +60,14 @@ class Spaceship{
 
       this.x = 200;
       this.y = 200
+  }
+  shoot(initX,initY){
+lasernum++;
+Lasers[lasernum] = new Laser(initX,initY);
+Lasers[lasernum].fired();
 
   }
-  show(){
-    this.edges();
-  image(img,this.x,this.y, img.width/4, img.height/4);
-  }
+
   moveX(xSpeed){
 
       this.xSpeed=xSpeed;
@@ -62,19 +79,21 @@ class Spaceship{
     this.ySpeed=ySpeed;
 this.y+=this.ySpeed;
   }
+  show(){
+    this.edges();
+  image(img,this.x,this.y, img.width/4, img.height/4);
+  this.initY++;
+}
   edges(){
     if(this.x > width - img.width/4){
       this.x = width - img.width/4;
     }
-
       if(this.x < 0){
         this.x = 0;
       }
-
         if(this.y > height - img.width / 4 + 20){
           this.y = height - img.width/4 + 20  ;
         }
-
           if(this.y < 0){
             this.y = 0;
           }
