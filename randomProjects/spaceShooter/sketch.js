@@ -46,7 +46,9 @@ function draw() {
     if (shot) {
         Lasers[laserNum].fired();
         for (var k = 1; k <= laserNum; k++) {
+if(Lasers[k].active){
             Lasers[k].checkAsteroid();
+}
         }
     }
     ship.show();
