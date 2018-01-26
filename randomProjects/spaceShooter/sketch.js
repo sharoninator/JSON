@@ -10,7 +10,7 @@ var shot = false;
 var pic;
 var heart;
 var maxAsteroids = 20;
-var numOfAsteroids = 20;
+var numOfAsteroids = 1;
 var lives = 3;
 var invincible = 0;
 
@@ -18,6 +18,7 @@ function preload() {
     img = loadImage("ship.png");
     pic = loadImage("asteroid.png");
     heart = loadImage("heart.png");
+
 }
 
 function setup() {
@@ -40,9 +41,8 @@ function draw() {
         } else {
             invincible--;
         }
-        // ellipse(Asteroids[j].x,Asteroids[j].y,10)
     }
-    // ellipse(ship.x,ship.y,10);
+
     if (shot) {
         Lasers[laserNum].fired();
         for (var k = 1; k <= laserNum; k++) {
@@ -52,7 +52,6 @@ if(Lasers[k].active){
         }
     }
     ship.show();
-
     if (keyIsDown(LEFT_ARROW)) {
         ship.moveX(-5);
     }
@@ -103,7 +102,7 @@ console.log(this.laserHit);
     }
     hitShip() {
 
-        if (dist(this.x, this.y, ship.x, ship.y) < 50) {
+        if (dist(this.x + pic.height / 12 + 5,this.y + pic.height / 12, ship.x + img.width/12,ship.y + img.width/12 - 10) < 60) {
             lives -= 1;
             invincible = 300;
         }
@@ -140,7 +139,7 @@ class Laser {
     }
     checkAsteroid() {
         for (var i = 1; i <= numOfAsteroids; i++) {
-            if (dist(this.initX, this.initY, Asteroids[i].x, Asteroids[i].y) < 50 && this.active) {// laser hits asteroid
+            if (dist(this.initX, this.initY, Asteroids[i].x + pic.height / 12 + 5,Asteroids[i].y + pic.height / 6) < 30 && this.active) {// laser hits asteroid
                 Asteroids[i].laserHit = true;
                 Asteroids[i].hit();
             }
