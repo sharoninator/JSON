@@ -86,8 +86,8 @@ class Asteroid {
     }
 
     hit() {
-        // if (this.y > height + random(pic.height / 6, pic.height / 6 + pic.height) || this.laserHit) { // hit by laser or hits bottom of screeen
-  if (this.y > height + 50 || this.laserHit) {
+         if (this.y > height + random(pic.height / 6, pic.height / 6 + pic.height) || this.laserHit) { // hit by laser or hits bottom of screeen
+
        console.log(this.laserHit);
 this.laserHit = false;
 console.log(this.laserHit);
