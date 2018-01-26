@@ -12,13 +12,13 @@ var heart;
 var maxAsteroids = 20;
 var numOfAsteroids = 1;
 var lives = 3;
+var dead = false;
 var invincible = 0;
 
 function preload() {
-    img = loadImage("ship.png");
-    pic = loadImage("asteroid.png");
-    heart = loadImage("heart.png");
-
+    img = loadImage("https://images-na.ssl-images-amazon.com/images/I/81V8mo-saXL._SY355_.jpg");
+    pic = loadImage("https://www.sprite.com/content/dam/sprite2016/spinner-sprite-0913.gif");
+    heart = loadImage("https://cms-assets.tutsplus.com/uploads/users/358/posts/25363/final_image/00-final-product-final.gif");
 }
 
 function setup() {
@@ -42,31 +42,41 @@ function draw() {
             invincible--;
         }
     }
+    if(!dead) {
+        if (shot) {
+            Lasers[laserNum].fired();
+            for (var k = 1; k <= laserNum; k++) {
+                if(Lasers[k].active){
+                    Lasers[k].checkAsteroid();
+                }
+            }
+        }
 
-    if (shot) {
-        Lasers[laserNum].fired();
-        for (var k = 1; k <= laserNum; k++) {
-if(Lasers[k].active){
-            Lasers[k].checkAsteroid();
-}
+        step = 5;
+        ship.show();
+        if (keyIsDown(LEFT_ARROW)) {
+            ship.moveX(-step);
+        }
+        if (keyIsDown(RIGHT_ARROW)) {
+            ship.moveX(step);
+        }
+        if (keyIsDown(UP_ARROW)) {
+            ship.moveY(-step);
+        }
+        if (keyIsDown(DOWN_ARROW)) {
+            ship.moveY(step);
         }
     }
-    ship.show();
-    if (keyIsDown(LEFT_ARROW)) {
-        ship.moveX(-5);
-    }
-    if (keyIsDown(RIGHT_ARROW)) {
-        ship.moveX(5);
-    }
-    if (keyIsDown(UP_ARROW)) {
-        ship.moveY(-5);
-    }
-    if (keyIsDown(DOWN_ARROW)) {
-        ship.moveY(5);
+    else {
+        lives++;// it will take 3 frames to respawn
+        if(lives >= 3) {
+            dead = false;
+        }
     }
 }
 
 function keyPressed() {
+    //space
     if (keyCode === 32) {
         ship.shoot(ship.x, ship.y);
     }
@@ -88,10 +98,9 @@ class Asteroid {
 
     hit() {
          if (this.y > height + random(pic.height / 6, pic.height / 6 + pic.height) || this.laserHit) { // hit by laser or hits bottom of screeen
-
-       console.log(this.laserHit);
-this.laserHit = false;
-console.log(this.laserHit);
+            console.log(this.laserHit);
+            this.laserHit = false;
+            console.log(this.laserHit);
             this.y = 0 - random(pic.height / 6, pic.height / 6 + pic.height);
             this.x = random(20, 550);
             this.ySpeed = random(3, 4.5);
@@ -105,6 +114,9 @@ console.log(this.laserHit);
         if (dist(this.x + pic.height / 12 + 5,this.y + pic.height / 12, ship.x + img.width/12,ship.y + img.width/12 - 10) < 60) {
             lives -= 1;
             invincible = 300;
+            if(lives <= 0){
+                dead = true;
+            }
         }
     }
     show() {
@@ -174,14 +186,17 @@ class Spaceship {
         this.y += this.ySpeed;
     }
     show() {
-        var pos = width - 40;
-        for (var i = 0; i < lives; i++) {
-            image(heart, pos, 3, heart.width / 16, heart.height / 16);
-            pos -= 40
+        if(!dead)
+        {
+            var pos = width - 40;
+            for (var i = 0; i < lives; i++) {
+                image(heart, pos, 3, heart.width / 16, heart.height / 16);
+                pos -= 40
+            }
+            this.edges();
+            image(img, this.x, this.y, img.width / 6, img.height / 6);
+            this.initY++;
         }
-        this.edges();
-        image(img, this.x, this.y, img.width / 6, img.height / 6);
-        this.initY++;
     }
     edges() {
         if (this.x > width - img.width / 6) {
