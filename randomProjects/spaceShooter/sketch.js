@@ -10,7 +10,7 @@ var shot = false;
 var pic;
 var heart;
 var maxAsteroids = 20;
-var numOfAsteroids = 1;
+var numOfAsteroids = 10;
 var lives = 3;
 var invincible = 0;
 
