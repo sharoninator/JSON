@@ -13,7 +13,7 @@ var alienShot = false;
 var pic;
 var heart;
 var maxAsteroids = 20;
-var numOfAsteroids = 10;
+var numOfAsteroids = 1;
 var lives = 3;
 var invincible = 0;
 var laser;
@@ -47,11 +47,12 @@ function draw() {
 
     if(alienShot){
       for(var l=1;l<=alienLaserNum;l++){
-
+if(alienLasers[l].active){
         alienLasers[l].show();
                 alienLasers[l].update();
                       alienLasers[l].edges();
-      }
+                    }
+      }  
     }
     for (var p = 1; p <= numOfAliens; p++) {
         Aliens[p].show();
