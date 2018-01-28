@@ -111,10 +111,10 @@ numOfAliens++;
         Asteroids[j].show();
         Asteroids[j].hit();
 
-        if (invincible <= 0) {
+        if (shipInvincible <= 0) {
             Asteroids[j].hitShip();
         } else {
-            invincible--;
+            shipInvincible--;
         }
     }
 
@@ -247,7 +247,7 @@ class AlienLaser{
   }
   hitShip(){
   if(  dist(ship.x + img.width / 12, ship.y + img.width / 12 - 10,this.initX + this.w/2,this.initY + this.h/2)  < 60){
-    shipInvincible = 200;
+    shipInvincible = 600;
 
 lives--;
   }
@@ -290,7 +290,7 @@ class Asteroid {
         if (dist(this.x + pic.height / 12 + 5, this.y + pic.height / 12, ship.x + img.width / 12, ship.y + img.width / 12 - 10) < 60) {
             lives -= 1;
 
-            invincible = 300;
+            shipInvincible = 600;
         }
     }
     show() {
