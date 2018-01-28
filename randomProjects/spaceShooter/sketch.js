@@ -72,11 +72,13 @@ if(alienLasers[l].active){
       }
     }
     for (var p = 1; p <= numOfAliens; p++) {
+        console.log(Aliens[p].newAlien);
 if(Aliens[p].explode > 0){
   Aliens[p].ending()
   Aliens[p].explode--;//RETHINK FUTURE MOFO
 }
-if(Aliens[p].explode === 1){
+if(Aliens[p].explode === Aliens[p].newAlien){
+
 numOfAliens++;
 }
 
@@ -168,6 +170,7 @@ this.alienLives = 10;
         this.shot = false;
         this.alienInvincible = 0;
         this.explode = 0;
+        this.newAlien = parseInt(random(1,299));
     }
     lifeBar(){
 
