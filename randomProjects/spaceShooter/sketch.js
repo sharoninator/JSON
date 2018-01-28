@@ -1,26 +1,33 @@
 "use strict";
 
-var Asteroids = [];
-var Aliens = [];
 var img;
-var ship;
-var Lasers = [];
-var alienLasers = [];
-var alienLaserNum = 0;
-var laserNum = 0;
-var shot = false;
-var alienShot = false;
+var skull;
+var explosion;
 var pic;
 var heart;
+var UFO;
+var ship;
+
+var Asteroids = [];
 var maxAsteroids = 20;
-var numOfAsteroids = 1;
-var lives = 3;
+var numOfAsteroids = 10;
+
+var Aliens = [];
+var numOfAliens = 1;
+var alienLasers = [];
+var alienLaserNum = 0;
+var alienShot = false;
+
+var Lasers = [];
+var laserNum = 0;
+var shot = false;
+
+
+var shipInvincible = 0;
+var lives = 5;
 var invincible = 0;
 var laser;
-var UFO;
-var numOfAliens = 1;
 var pos;
-var skull;
 function preload() {
     // laser =  loadSound("file:///C:/Users/iboss/Desktop/spaceShooter/laser.mp3");
     img = loadImage("ship.png");
@@ -28,6 +35,7 @@ function preload() {
     heart = loadImage("heart.png");
     UFO = loadImage("UFO.png");
 skull = loadImage("skull.png");
+explosion = loadImage("explosion.png");
 }
 
 function setup() {
@@ -36,7 +44,7 @@ function setup() {
     for (var i = 1; i <= maxAsteroids; i++) {
         Asteroids[i] = new Asteroid();
     }
-    for (var j = 1; j <= numOfAliens; j++) {
+    for (var j = 1; j <= 10; j++) {
         Aliens[j] = new Alien();
     }
 
@@ -44,18 +52,39 @@ function setup() {
 
 function draw() {
     background(51);
-
     if(alienShot){
       for(var l=1;l<=alienLaserNum;l++){
 if(alienLasers[l].active){
         alienLasers[l].show();
                 alienLasers[l].update();
                       alienLasers[l].edges();
+
                     }
-      }  
+      }
+
+      if(shipInvincible <= 0){
+              for(var j=1;j<=alienLaserNum;j++){
+            alienLasers[j].hitShip();
+          }
+      }
+      else{
+        shipInvincible--;
+      }
     }
     for (var p = 1; p <= numOfAliens; p++) {
+if(Aliens[p].explode > 0){
+  Aliens[p].ending()
+  Aliens[p].explode--;//RETHINK FUTURE MOFO
+}
+if(Aliens[p].explode === 1){
+numOfAliens++;
+}
+
+      if(Aliens[p].onScreen){
         Aliens[p].show();
+
+        Aliens[p].death();
+            Aliens[p].lifeBar();
         if(alienShot){
 
             rect(Aliens[p].initX,Aliens[p].initY,10,40)
@@ -71,7 +100,10 @@ if(alienLasers[l].active){
 } else{
   Aliens[p].cooldown--;
     }
-}
+      Aliens[p].alienInvincible--;
+    }
+  }
+
 
 
     for (var j = 1; j <= numOfAsteroids; j++) {
@@ -91,9 +123,14 @@ if(alienLasers[l].active){
         for (var k = 1; k <= laserNum; k++) {
             if (Lasers[k].active) {
                 Lasers[k].checkAsteroid();
+
+                Lasers[k].checkUFO();
+
             }
         }
     }
+
+
     ship.show();
     ship.lives();
     if (keyIsDown(LEFT_ARROW)) {
@@ -116,43 +153,40 @@ function keyPressed() {
     }
 }
 
-class AlienLaser{
-  constructor(initX,initY){
-    this.initX = initX + UFO.width/24;
-    this.initY = initY + UFO.height/24;
-        this.laserSpeed = 3;
-        this.h =40;
-        this.w = 5;
-        this.active = true;
-  }
-  show(){
-    fill(43, 0, 255);
-    rect(this.initX,this.initY,this.w,this.h);
-  }
-  update(){
-    this.initY +=this.laserSpeed;
-  }
-  edges(){
-    if(this.initY >width + this.h ){
-      this.active = false;
-    }
-  }
-}
-
-
-
 class Alien {
     constructor() {
         this.ySpeed = random(1.5,3);
         this.xSpeed = random(1,2);
         this.yDown = random(50, 200);
         this.xDown = random(20, 450);
+        this.onScreen = true;
         this.x = this.xDown;
         this.y = -this.yDown;
         this.isDown = false;
         this.cooldown = 0;
-
+this.alienLives = 10;
         this.shot = false;
+        this.alienInvincible = 0;
+        this.explode = 0;
+    }
+    lifeBar(){
+
+
+      fill(51);
+      rect(this.x + UFO.width/24 - 30,this.y - 10,60,5);
+      fill(255, 0, 0);
+      rect(this.x + UFO.width/24 - 30,this.y - 10,this.alienLives*6,5);
+    }
+
+    death(){
+      if(this.alienLives<=0){
+        this.onScreen = false;
+this.explode = 120;
+      }
+    }
+    ending(){
+      image(explosion,this.x,this.y,explosion.width/4,explosion.height/4);
+      // numOfAliens++;
     }
     down() {
         this.y += this.ySpeed;
@@ -180,16 +214,50 @@ if(Math.max(this.x,ship.x + img.width / 12) - Math.min(this.x,ship.x + img.width
 alienLasers[alienLaserNum] = new AlienLaser(this.x,this.y);
 
 alienShot = true;
-    this.cooldown = 60;
+    this.cooldown = 80;
 }
     }
     fire(initX,initY){
       this.shot = true;
       this.initX = initX;
       this.initY = initY;
-console.log(this.initY);
 }
 }
+
+class AlienLaser{
+  constructor(initX,initY){
+    this.initX = initX + UFO.width/24;
+    this.initY = initY + UFO.height/24;
+        this.laserSpeed = 3;
+        this.h =40;
+        this.w = 5;
+        this.active = true;
+  }
+  show(){
+    fill(43, 0, 255);
+    rect(this.initX,this.initY,this.w,this.h);
+  }
+  update(){
+    this.initY +=this.laserSpeed;
+  }
+  edges(){
+    if(this.initY >width + this.h ){
+      this.active = false;
+    }
+  }
+  hitShip(){
+  if(  dist(ship.x + img.width / 12, ship.y + img.width / 12 - 10,this.initX + this.w/2,this.initY + this.h/2)  < 60){
+    shipInvincible = 200;
+
+lives--;
+  }
+  }
+
+}
+
+
+
+
 
 class Asteroid {
     constructor() {
@@ -221,6 +289,7 @@ class Asteroid {
 
         if (dist(this.x + pic.height / 12 + 5, this.y + pic.height / 12, ship.x + img.width / 12, ship.y + img.width / 12 - 10) < 60) {
             lives -= 1;
+
             invincible = 300;
         }
     }
@@ -258,11 +327,25 @@ class Laser {
     checkAsteroid() {
         for (var i = 1; i <= numOfAsteroids; i++) {
             if (dist(this.initX, this.initY, Asteroids[i].x + pic.height / 12 + 5, Asteroids[i].y + pic.height / 6) < 30 && this.active) { // laser hits asteroid
+ this.active = false;
                 Asteroids[i].laserHit = true;
                 Asteroids[i].hit();
             }
         }
     }
+
+    checkUFO(){
+      for(var i=1;i<=numOfAliens;i++){
+        if(Aliens[i].alienInvincible <= 0){
+      if(dist(this.initX + 2.5,this.initY,Aliens[i].x + UFO.width/24,Aliens[i].y + UFO.height/24) < 70){
+        Aliens[i].alienLives--;
+
+Aliens[i].alienInvincible=30;
+      }
+    }
+}
+}
+
 }
 
 
