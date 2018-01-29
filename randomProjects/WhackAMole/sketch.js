@@ -1,13 +1,13 @@
 "use strict";
+
 var Targets = [];
-var num = 2 ;
+var bash;
 var hammer;
 var mole;
 var bg;
 var xPos = [130, 310,490];
 var yPos = [300,400,510];
-var bash;
-var cliecked = 0;
+var targetNum = 2;
 var down = false;
 var wait = 0;
 function preload(){
@@ -17,15 +17,16 @@ function preload(){
 }
 function setup() {
   createCanvas(600,600);
-  for(var i=0;i<num;i++){
+  for(var i=0;i<targetNum;i++){
     Targets[i] = new Target();
-    bash = new Hammer();
   }
+      bash = new Hammer();
 }
 
 
 function draw() {
     background(bg);
+
     down = false;
     if (mouseIsPressed) {
     down = true;
@@ -33,19 +34,19 @@ function draw() {
  }
   for(var i=0;i<Targets.length;i++){
 
-
+  
     if(Targets[i].new){
+
+
     Targets[i].show();
   }
   }
+
 if(wait >0){
   wait--;
 }  if(wait === 1){
-console.log(wait);
   Targets[0].newTarget();
 }
-
-
   bash.show();
 
 }
@@ -91,15 +92,12 @@ class Target{
   redefine(){
     for(var j=0;j<Targets.length;j++){
     Targets[j].new = false;
-
-
     }
  wait = parseInt(random(10,100));
   }
   newTarget(){
-    console.log("new");
-    num = random(0,3);
-      for(var i=0;i<num;i++){
+    targetNum = random(0,3);
+      for(var i=0;i<targetNum;i++){
         Targets[i] = new Target();
       }
   }
