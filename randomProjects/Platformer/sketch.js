@@ -4,6 +4,7 @@ var player;
 var Platforms = [];
 var platformNum = 7;
 var loaded = 0;
+var fuel = 300;
 var img;
 var pressed = false;
 var flame;
@@ -25,6 +26,7 @@ function setup() {
 
 function draw() {
     background(51);
+    fuel+=0.2;
     for(var i=0;i<platformNum;i++){
       Platforms[i].show();
             Platforms[i].update();
@@ -36,8 +38,15 @@ function draw() {
     player.edges();
     player.show();
     if (keyIsDown(32)) {
+      if(fuel > 0){
         player.jet();
         pressed = true;
+        fuel--;
+      }else{
+        pressed = false;
+      }
+
+
     } else {
         player.jetpack.x = 0;
         player.jetpack.y = 0;
@@ -45,12 +54,14 @@ function draw() {
     }
 
 }
-// class Platform{
-//   construcotr(){}
-// show(){}
-// update(){}
-// offScreen(){}
-// }
+
+function fuelBar(){
+rect(width/2 - 40, 40,300,10)
+fill(0,255,0);
+rect(width/2-40,40,fuel,10);
+
+}
+
 
 
 class Platform {
@@ -115,7 +126,7 @@ class Player {
       image(flame,this.position.x - 34,this.position.y -4,flame.width/16,flame.height/16);
         }
     image(img,this.position.x-30,this.position.y - 34,img.width/12,img.height/12);
-
+fuelBar();
     }
 
     update() {
