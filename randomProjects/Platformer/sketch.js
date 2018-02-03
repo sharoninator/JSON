@@ -47,7 +47,7 @@ class Platform {
         this.y = random(height/4,height);
         this.xSpeed = -8;
         this.h = 10;
-        this.w = 500;
+        this.w = random(150,400);
         loaded++;
     }
 
