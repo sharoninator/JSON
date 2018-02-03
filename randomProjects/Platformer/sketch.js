@@ -2,8 +2,18 @@
 
 var player;
 var Platforms = [];
-var platformNum = 5;
+var platformNum = 7;
 var loaded = 0;
+var img;
+var pressed = false;
+var flame;
+
+
+
+function preload(){
+img = loadImage("jetpack.png");
+flame = loadImage("flame.png");
+}
 
 function setup() {
     createCanvas(1200, 600);
@@ -27,9 +37,11 @@ function draw() {
     player.show();
     if (keyIsDown(32)) {
         player.jet();
+        pressed = true;
     } else {
         player.jetpack.x = 0;
         player.jetpack.y = 0;
+        pressed = false;
     }
 
 }
@@ -65,7 +77,8 @@ class Platform {
 
  offScreen(){
    if(this.x<-this.w){
-     this.x = random(width,width*2);
+     this.x = random(width,width*4);
+     this.y = random(height/4,height);
    }
  }
 
@@ -73,7 +86,7 @@ class Platform {
  if(player.position.x > this.x && player.position.x < this.x + this.w && this.y < player.position.y && (player.position.y-this.y) < 15 ){
 console.log(player.position.y-this.y);
 
-    player.position.y = this.y - 2;
+    player.position.y = this.y - 1;
     player.gravity.y = 0;
     player.jetpack.y = 0;
        player.velocity.y = 0;
@@ -97,7 +110,12 @@ class Player {
     }
     show() {
         fill(255);
-        ellipse(this.position.x, this.position.y, 30);
+        ellipse(this.position.x, this.position.y -14, 30);
+        if(pressed){
+      image(flame,this.position.x - 34,this.position.y -4,flame.width/16,flame.height/16);
+        }
+    image(img,this.position.x-30,this.position.y - 34,img.width/12,img.height/12);
+
     }
 
     update() {
@@ -107,6 +125,7 @@ class Player {
     }
     jet() {
         this.jetpack = createVector(0, -0.75);
+
     }
     edges() {
 if(this.position.y > height -15){
