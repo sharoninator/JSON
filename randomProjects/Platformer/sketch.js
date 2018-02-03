@@ -47,7 +47,7 @@ class Platform {
         this.y = random(height/4,height);
         this.xSpeed = -8;
         this.h = 10;
-        this.w = random(150,400);
+        this.w = random(150,600);
         loaded++;
     }
 
@@ -70,8 +70,8 @@ class Platform {
  }
 
  ballPos(){
- if(player.position.x > this.x && player.position.x < this.x + this.w && this.y < player.position.y ){
-console.log(this.y + " - " + player.position.y);
+ if(player.position.x > this.x && player.position.x < this.x + this.w && this.y < player.position.y && (player.position.y-this.y) < 15 ){
+console.log(player.position.y-this.y);
 
     player.position.y = this.y - 2;
     player.gravity.y = 0;
