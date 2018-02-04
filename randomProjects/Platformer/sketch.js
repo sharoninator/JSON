@@ -67,7 +67,12 @@ fuel.fuelBar();
 
 
 
+function mousePressed(){
+if(player.position.y > height -15){
+  location.reload();
+}
 
+}
 
 
 
@@ -140,10 +145,12 @@ class Platform {
       if(dist(this.x + this.w/2 - 50,this.y-50 ,player.position.x,player.position.y) < 60){
 this.getGas++;
       }
-      if(this.getGas > 7){
+      if(this.getGas > 1){
+
         fuel.amt +=100;
         this.getGas = 0;
         this.fuelIcon = false;
+          console.log(fuel.amt);
       }
 
     }
@@ -220,7 +227,7 @@ if(this.position.y > height -15){
 textSize(300);
 text("Dead!",30,300);
 textSize(50);
-text("Reload to restart",30,400);
+text("Click anywhere to restart",40,400);
 noLoop();
 } else if(this.position.y < 15){
   this.position.y = 15;
