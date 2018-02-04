@@ -2,22 +2,23 @@
 
 var player;
 var Platforms = [];
-var platformNum = 7;
+var platformNum = 10;
 var loaded = 0;
-var fuel = 300;
+var fuel;
 var img;
 var pressed = false;
 var flame;
-
-
-
+var spikes;
+var gas;
 function preload(){
+  gas = loadImage("fuel.png");
 img = loadImage("jetpack.png");
 flame = loadImage("flame.png");
 }
 
 function setup() {
     createCanvas(1200, 600);
+    fuel = new Fuel();
     player = new Player();
     for(var i=0;i<platformNum;i++){
       Platforms[i] = new Platform();
@@ -26,7 +27,9 @@ function setup() {
 
 function draw() {
     background(51);
-    fuel+=0.2;
+fuel.fuelBar();
+  fuel.update();
+
     for(var i=0;i<platformNum;i++){
       Platforms[i].show();
             Platforms[i].update();
@@ -38,12 +41,17 @@ function draw() {
     player.edges();
     player.show();
     if (keyIsDown(32)) {
-      if(fuel > 0){
+      if(fuel.amt > 0){
         player.jet();
         pressed = true;
-        fuel--;
+        fuel.amt--;
       }else{
+        fuel.amt--;
         pressed = false;
+        if(fuel.amt < -10){
+          fuel.amt = -10;
+
+        }
       }
 
 
@@ -55,10 +63,45 @@ function draw() {
 
 }
 
-function fuelBar(){
-rect(width/2 - 40, 40,300,10)
-fill(0,255,0);
-rect(width/2-40,40,fuel,10);
+
+
+
+
+
+
+
+
+
+class Fuel{
+  constructor(){
+this.amt = 300;
+this.bar = false;
+  }
+  fuelBar(){
+  rect(width/2 - 80, 40,300,10)
+  fill(0,255,0);
+  if(!this.bar){
+  rect(width/2-80,40,this.amt,10);
+} else{
+    rect(width/2-40,40,0,10);
+}
+
+}
+update(){
+  fuel.amt+=0.25;
+  if(fuel.amt < 0 ){
+    this.bar = true;
+
+  } else{
+    this.bar = false;
+  }
+
+
+
+
+}
+
+
 
 }
 
@@ -66,11 +109,18 @@ rect(width/2-40,40,fuel,10);
 
 class Platform {
     constructor() {
-        this.x = random(0,width);
-        this.y = random(height/4,height);
-        this.xSpeed = -8;
+      this.chance = parseInt(random(0,15));
+      if(this.chance === 5){
+        this.fuelIcon = true;
+      }else{
+        this.fuelIcon = false;
+      }
+        this.x = random(0,width * 3);
+        this.y = random(height/4,height - 50);
+        this.xSpeed = random(-4,-7);
         this.h = 10;
         this.w = random(150,600);
+        this.getGas = 0;
         loaded++;
     }
 
@@ -79,23 +129,50 @@ class Platform {
         rect(this.x, this.y, this.w , this.h );
 
 
+
+        if(this.fuelIcon){
+
+          image(gas, this.x + this.w/2 - 50,this.y-50 ,gas.width/48,gas.height/48)
+
+        }
+
     }
 
     update(){
       this.x += this.xSpeed;
+      if(this.fuelIcon){
+      if(dist(this.x + this.w/2 - 50,this.y-50 ,player.position.x,player.position.y) < 60){
+this.getGas++;
+      }
+      if(this.getGas > 8){
+        fuel.amt +=100;
+        this.getGas = 0;
+        this.fuelIcon = false;
+      }
 
     }
+    if(fuel.amt > 300){
+      fuel.amt = 300;
+    }
+  }
 
  offScreen(){
    if(this.x<-this.w){
-     this.x = random(width,width*4);
-     this.y = random(height/4,height);
+     this.x = random(width,width*3);
+     this.y = random(height/4,height - 50);
+       this.xSpeed = random(-5,-7);
+       this.chance = parseInt(random(0,15));
+       if(this.chance  === 5){
+         this.fuelIcon = true;
+       }else{
+         this.fuelIcon = false;
+       }
    }
  }
 
  ballPos(){
  if(player.position.x > this.x && player.position.x < this.x + this.w && this.y < player.position.y && (player.position.y-this.y) < 15 ){
-console.log(player.position.y-this.y);
+
 
     player.position.y = this.y - 1;
     player.gravity.y = 0;
@@ -126,7 +203,6 @@ class Player {
       image(flame,this.position.x - 34,this.position.y -4,flame.width/16,flame.height/16);
         }
     image(img,this.position.x-30,this.position.y - 34,img.width/12,img.height/12);
-fuelBar();
     }
 
     update() {
