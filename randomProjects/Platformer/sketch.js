@@ -154,7 +154,7 @@ this.getGas++;
    if(this.x<-this.w){
      this.x = random(width,width*3);
      this.y = random(height/4,height - 50);
-       this.xSpeed = random(-5,-7);
+       this.xSpeed = random(-6,-9);
        this.chance = parseInt(random(0,15));
        if(this.chance  === 5){
          this.fuelIcon = true;
