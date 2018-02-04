@@ -138,7 +138,7 @@ class Platform {
       if(dist(this.x + this.w/2 - 50,this.y-50 ,player.position.x,player.position.y) < 60){
 this.getGas++;
       }
-      if(this.getGas > 8){
+      if(this.getGas > 7){
         fuel.amt +=100;
         this.getGas = 0;
         this.fuelIcon = false;
@@ -210,7 +210,11 @@ class Player {
     }
     edges() {
 if(this.position.y > height -15){
-alert("You hit the bottom! Reload to restart");
+  fill(255);
+textSize(300);
+text("Dead!",30,300);
+textSize(50);
+text("Reload to restart",30,400);
 noLoop();
 } else if(this.position.y < 15){
   this.position.y = 15;
