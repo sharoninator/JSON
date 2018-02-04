@@ -24,6 +24,8 @@ function setup() {
     for(var i=0;i<platformNum;i++){
       Platforms[i] = new Platform();
     }
+      Platforms[0].x = 50;
+Platforms[0].width = 500;
 }
 
 function draw() {
@@ -121,14 +123,15 @@ class Platform {
         this.w = random(150,600);
         this.getGas = 0;
         loaded++;
+
     }
 
     show() {
         fill(255, 0, 0);
         rect(this.x, this.y, this.w , this.h );
 
-        for(var i=0;i<width;i+=spikes.width/12){
-          image(spikes,i,height-spikes.height/12,spikes.width/12,spikes.height/12);
+        for(var i=0;i<width;i+=spikes.width/10){
+          image(spikes,i,height-spikes.height/10,spikes.width/10,spikes.height/10);
         }
 
         if(this.fuelIcon){
