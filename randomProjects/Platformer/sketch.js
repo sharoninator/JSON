@@ -84,12 +84,10 @@ this.amt = 300;
 this.bar = false;
   }
   fuelBar(){
-  rect(width/2 - 80, 40,300,10)
+  rect(width/2 - 140, 40,300,10)
   fill(0,255,0);
   if(!this.bar){
-  rect(width/2-80,40,this.amt,10);
-} else{
-    rect(width/2-40,40,0,10);
+  rect(width/2-140,40,this.amt,10);
 }
 
 }
@@ -227,7 +225,7 @@ if(this.position.y > height -15){
 textSize(300);
 text("Dead!",30,300);
 textSize(50);
-text("Click anywhere to restart",40,400);
+text("Click anywhere to play again",40,400);
 noLoop();
 } else if(this.position.y < 15){
   this.position.y = 15;
