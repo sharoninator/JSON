@@ -111,7 +111,7 @@ class Platform {
       }
         this.x = random(0,width * 3);
         this.y = random(height/4,height - 50);
-        this.xSpeed = random(-4,-7);
+        this.xSpeed = random(-6,-9);
         this.h = 10;
         this.w = random(150,600);
         this.getGas = 0;
