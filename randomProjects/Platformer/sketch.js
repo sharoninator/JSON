@@ -109,9 +109,11 @@ class Platform {
       }else{
         this.fuelIcon = false;
       }
+      this.beginning  = -4;
+      this.end = -7;
         this.x = random(0,width * 3);
         this.y = random(height/4,height - 50);
-        this.xSpeed = random(-6,-9);
+        this.xSpeed = random(this.beginning,this.end);
         this.h = 10;
         this.w = random(150,600);
         this.getGas = 0;
@@ -151,10 +153,13 @@ this.getGas++;
   }
 
  offScreen(){
+   console.log(this.beginning + " - " + this.end);
+   this.beginning-=0.3;
+   this.end-=0.3
    if(this.x<-this.w){
      this.x = random(width,width*3);
      this.y = random(height/4,height - 50);
-       this.xSpeed = random(-6,-9);
+       this.xSpeed = random(this.beginning,this.end);
        this.chance = parseInt(random(0,15));
        if(this.chance  === 5){
          this.fuelIcon = true;
