@@ -2,7 +2,7 @@
 
 var player;
 var Platforms = [];
-var platformNum = 10;
+var platformNum = 6;
 var loaded = 0;
 var fuel;
 var img;
@@ -14,6 +14,7 @@ function preload(){
   gas = loadImage("fuel.png");
 img = loadImage("jetpack.png");
 flame = loadImage("flame.png");
+spikes = loadImage("spikes.png");
 }
 
 function setup() {
@@ -95,14 +96,7 @@ update(){
   } else{
     this.bar = false;
   }
-
-
-
-
 }
-
-
-
 }
 
 
@@ -128,12 +122,12 @@ class Platform {
         fill(255, 0, 0);
         rect(this.x, this.y, this.w , this.h );
 
-
+        for(var i=0;i<width;i+=spikes.width/12){
+          image(spikes,i,height-spikes.height/12,spikes.width/12,spikes.height/12);
+        }
 
         if(this.fuelIcon){
-
           image(gas, this.x + this.w/2 - 50,this.y-50 ,gas.width/48,gas.height/48)
-
         }
 
     }
@@ -216,12 +210,15 @@ class Player {
     }
     edges() {
 if(this.position.y > height -15){
-  this.position.y = height - 15;
-  this.velocity.y = 0;
+alert("You hit the bottom! Reload to restart");
+noLoop();
 } else if(this.position.y < 15){
   this.position.y = 15;
   this.jetpack.y = 1;
   this.velocity.y = 1;
 }
     }
+
+
+
 }
