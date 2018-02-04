@@ -153,10 +153,9 @@ this.getGas++;
   }
 
  offScreen(){
-   console.log(this.beginning + " - " + this.end);
-   this.beginning-=0.3;
-   this.end-=0.3
+
    if(this.x<-this.w){
+
      this.x = random(width,width*3);
      this.y = random(height/4,height - 50);
        this.xSpeed = random(this.beginning,this.end);
@@ -166,6 +165,8 @@ this.getGas++;
        }else{
          this.fuelIcon = false;
        }
+       this.beginning-=0.15;
+       this.end-=0.15
    }
  }
 
