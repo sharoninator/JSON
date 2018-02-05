@@ -10,8 +10,10 @@ var pressed = false;
 var flame;
 var spikes;
 var gas;
+var platform;
 var paused = false;
 function preload(){
+  platform = loadImage("platform.png");
   gas = loadImage("fuel.png");
 img = loadImage("jetpack.png");
 flame = loadImage("flame.png");
@@ -28,6 +30,8 @@ function setup() {
       Platforms[0].x = 50;
 Platforms[0].width = 500;
 Platforms[4].fuelIcon = true;
+
+
 }
 
 function draw() {
@@ -149,7 +153,7 @@ class Platform {
     show() {
         fill(255, 0, 0);
         rect(this.x, this.y, this.w , this.h );
-
+image(platform,this.x-20,this.y - 20,this.w + 30,platform.height/8 );
         for(var i=0;i<width;i+=spikes.width/10){
           image(spikes,i,height-spikes.height/10,spikes.width/10,spikes.height/10);
         }
@@ -198,7 +202,7 @@ this.getGas++;
  }
 
  ballPos(){
- if(player.position.x > this.x && player.position.x < this.x + this.w && this.y < player.position.y && (player.position.y-this.y) < player.velocity.y ){
+ if(player.position.x > this.x && player.position.x < this.x + this.w && this.y < player.position.y && (player.position.y-this.y) < player.velocity.y + 2 ){
 
 
     player.position.y = this.y - 1;
