@@ -11,8 +11,10 @@ var flame;
 var spikes;
 var gas;
 var platform;
+var sky;
 var paused = false;
 function preload(){
+  sky = loadImage("sky.jpg");
   platform = loadImage("platform.png");
   gas = loadImage("fuel.png");
 img = loadImage("jetpack.png");
@@ -35,7 +37,7 @@ Platforms[4].fuelIcon = true;
 }
 
 function draw() {
-    background(51);
+    background(sky);
   if(frameCount % 60 === 0){
     timer++;
   }
@@ -152,7 +154,6 @@ class Platform {
 
     show() {
         fill(255, 0, 0);
-        rect(this.x, this.y, this.w , this.h );
 image(platform,this.x-20,this.y - 20,this.w + 30,platform.height/8 );
         for(var i=0;i<width;i+=spikes.width/10){
           image(spikes,i,height-spikes.height/10,spikes.width/10,spikes.height/10);
