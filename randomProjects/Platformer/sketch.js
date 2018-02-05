@@ -94,7 +94,6 @@ function mousePressed(){
 if(player.position.y > height -15){
   location.reload();
 }
-
 }
 
 
@@ -199,7 +198,7 @@ this.getGas++;
  }
 
  ballPos(){
- if(player.position.x > this.x && player.position.x < this.x + this.w && this.y < player.position.y && (player.position.y-this.y) < 15 ){
+ if(player.position.x > this.x && player.position.x < this.x + this.w && this.y < player.position.y && (player.position.y-this.y) < player.velocity.y ){
 
 
     player.position.y = this.y - 1;
