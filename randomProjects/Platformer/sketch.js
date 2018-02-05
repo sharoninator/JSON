@@ -8,7 +8,6 @@ var fuel;
 var img;
 var pressed = false;
 var flame;
-var spikes;
 var gas;
 var platform;
 var platform2;
@@ -23,7 +22,6 @@ function preload(){
   gas = loadImage("fuel.png");
 img = loadImage("jetpack.png");
 flame = loadImage("flame.png");
-spikes = loadImage("spikes.png");
 }
 
 function setup() {
@@ -159,9 +157,6 @@ class Platform {
     show() {
         fill(255, 0, 0);
 image(this.plat,this.x-20,this.y - 20,this.w + 30,platform.height/8 );
-        for(var i=0;i<width;i+=spikes.width/10){
-          image(spikes,i,height-spikes.height/10,spikes.width/10,spikes.height/10);
-        }
 
         if(this.fuelIcon){
           image(gas, this.x + this.w/2 - 50,this.y-50 ,gas.width/48,gas.height/48)
