@@ -11,11 +11,13 @@ var flame;
 var spikes;
 var gas;
 var platform;
+var platform2;
 var sky;
 var   chance  = 7;
 var gasChance = 0;
 var paused = false;
 function preload(){
+  platform2 = loadImage("platform2.png");
   sky = loadImage("sky.jpg");
   platform = loadImage("platform.png");
   gas = loadImage("fuel.png");
@@ -136,6 +138,11 @@ update(){
 
 class Platform {
     constructor() {
+      if(Math.random() > 0.5 ){
+        this.plat = platform2;
+      }else{
+        this.plat = platform;
+      }
 
       this.beginning  = -4;
       this.end = -7;
@@ -151,7 +158,7 @@ class Platform {
 
     show() {
         fill(255, 0, 0);
-image(platform,this.x-20,this.y - 20,this.w + 30,platform.height/8 );
+image(this.plat,this.x-20,this.y - 20,this.w + 30,platform.height/8 );
         for(var i=0;i<width;i+=spikes.width/10){
           image(spikes,i,height-spikes.height/10,spikes.width/10,spikes.height/10);
         }
@@ -200,11 +207,21 @@ this.getGas++;
        }
        this.beginning-=0.15;
        this.end-=0.15
+
+       if(Math.random() > 0.5 ){
+         this.plat = platform2;
+       }else{
+         this.plat = platform;
+       }
+
    }
+
  }
 
  ballPos(){
- if(player.position.x > this.x && player.position.x < this.x + this.w && this.y < player.position.y && (player.position.y-this.y) < player.velocity.y + 5 ){
+
+
+ if(player.position.x > this.x - 15 && player.position.x < this.x + this.w && this.y < player.position.y && (player.position.y-this.y) < player.velocity.y + 5 ){
 
 
     player.position.y = this.y - 1;
