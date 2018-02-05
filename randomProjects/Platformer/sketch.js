@@ -1,5 +1,5 @@
 "use strict";
-
+var timer = 0;
 var player;
 var Platforms = [];
 var platformNum = 6;
@@ -10,6 +10,7 @@ var pressed = false;
 var flame;
 var spikes;
 var gas;
+var paused = false;
 function preload(){
   gas = loadImage("fuel.png");
 img = loadImage("jetpack.png");
@@ -26,10 +27,16 @@ function setup() {
     }
       Platforms[0].x = 50;
 Platforms[0].width = 500;
+Platforms[4].fuelIcon = true;
 }
 
 function draw() {
     background(51);
+  if(frameCount % 60 === 0){
+    timer++;
+  }
+  textSize(20);
+  text(timer,width-60,30);
 fuel.fuelBar();
   fuel.update();
 
@@ -66,7 +73,21 @@ fuel.fuelBar();
 
 }
 
+function keyPressed() {
+  if (keyCode === 27) {
+if(paused){
+  paused = false;
+  loop();
+} else if(!paused){
+  paused = true;
+  noLoop();
+}
 
+
+
+
+  }
+}
 
 
 function mousePressed(){
@@ -151,7 +172,6 @@ this.getGas++;
         fuel.amt +=100;
         this.getGas = 0;
         this.fuelIcon = false;
-          console.log(fuel.amt);
       }
 
     }
