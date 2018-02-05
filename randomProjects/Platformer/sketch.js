@@ -204,7 +204,7 @@ this.getGas++;
  }
 
  ballPos(){
- if(player.position.x > this.x && player.position.x < this.x + this.w && this.y < player.position.y && (player.position.y-this.y) < player.velocity.y + 2 ){
+ if(player.position.x > this.x && player.position.x < this.x + this.w && this.y < player.position.y && (player.position.y-this.y) < player.velocity.y + 5 ){
 
 
     player.position.y = this.y - 1;
