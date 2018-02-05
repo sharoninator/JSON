@@ -12,6 +12,8 @@ var spikes;
 var gas;
 var platform;
 var sky;
+var   chance  = 7;
+var gasChance = 0;
 var paused = false;
 function preload(){
   sky = loadImage("sky.jpg");
@@ -134,12 +136,7 @@ update(){
 
 class Platform {
     constructor() {
-      this.chance = parseInt(random(0,15));
-      if(this.chance === 5){
-        this.fuelIcon = true;
-      }else{
-        this.fuelIcon = false;
-      }
+
       this.beginning  = -4;
       this.end = -7;
         this.x = random(0,width * 3);
@@ -191,10 +188,14 @@ this.getGas++;
      this.x = random(width,width*3);
      this.y = random(height/4,height - 50);
        this.xSpeed = random(this.beginning,this.end);
-       this.chance = parseInt(random(0,15));
-       if(this.chance  === 5){
+       if(gasChance ===chance){
+         console.log("has");
+         gasChance = 0;
+
+         chance = parseInt(random(7,14));
          this.fuelIcon = true;
        }else{
+         gasChance++;
          this.fuelIcon = false;
        }
        this.beginning-=0.15;
