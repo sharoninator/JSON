@@ -12,10 +12,12 @@ var gas;
 var platform;
 var platform2;
 var sky;
-var   chance  = 7;
+var ground;
+var  chance  = 7;
 var gasChance = 0;
 var paused = false;
 function preload(){
+  ground = loadImage("ground.png");
   platform2 = loadImage("platform2.png");
   sky = loadImage("sky.jpg");
   platform = loadImage("platform.png");
@@ -158,6 +160,9 @@ class Platform {
         fill(255, 0, 0);
 image(this.plat,this.x-20,this.y - 20,this.w + 30,platform.height/8 );
 
+for(var i=0;i<width;i+=ground.width/4){
+  image(ground,i,580,ground.width/4,ground.height/4);
+}
         if(this.fuelIcon){
           image(gas, this.x + this.w/2 - 50,this.y-50 ,gas.width/48,gas.height/48)
         }
@@ -191,7 +196,6 @@ this.getGas++;
      this.y = random(height/4,height - 50);
        this.xSpeed = random(this.beginning,this.end);
        if(gasChance ===chance){
-         console.log("has");
          gasChance = 0;
 
          chance = parseInt(random(7,14));
@@ -245,7 +249,7 @@ class Player {
         fill(255);
         ellipse(this.position.x, this.position.y -14, 30);
         if(pressed){
-      image(flame,this.position.x - 34,this.position.y -4,flame.width/16,flame.height/16);
+      image(flame,this.position.x - 36,this.position.y -4,flame.width/16,flame.height/16);
         }
     image(img,this.position.x-30,this.position.y - 34,img.width/12,img.height/12);
     }
