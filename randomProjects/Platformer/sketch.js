@@ -172,7 +172,7 @@ for(var i=0;i<width;i+=ground.width/4){
     update(){
       this.x += this.xSpeed;
       if(this.fuelIcon){
-      if(dist(this.x + this.w/2 - 50,this.y-50 ,player.position.x,player.position.y) < 60){
+  if(dist(this.x + this.w/2 - 50 + gas.width/96,this.y-50 + gas.height/96,player.position.x,player.position.y) < 40){
 this.getGas++;
       }
       if(this.getGas > 1){
