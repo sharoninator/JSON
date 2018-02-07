@@ -12,6 +12,7 @@ var gas;
 var platform;
 var platform2;
 var sky;
+var mouseDown;
 var ground;
 var  chance  = 7;
 var gasChance = 0;
@@ -60,7 +61,7 @@ fuel.fuelBar();
     player.update();
     player.edges();
     player.show();
-    if (keyIsDown(32)) {
+    if (keyIsDown(32) || mouseDown) {
       if(fuel.amt > 0){
         player.jet();
         pressed = true;
@@ -101,9 +102,13 @@ if(paused){
 
 
 function mousePressed(){
+  mouseDown = true;
 if(player.position.y > height -15){
   location.reload();
 }
+}
+function mouseReleased(){
+  mouseDown  = false;
 }
 
 
