@@ -93,10 +93,6 @@ if(paused){
   paused = true;
   noLoop();
 }
-
-
-
-
   }
 }
 
@@ -203,7 +199,7 @@ this.getGas++;
        if(gasChance ===chance){
          gasChance = 0;
 
-         chance = parseInt(random(7,14));
+         chance = parseInt(random(10,14));
          this.fuelIcon = true;
        }else{
          gasChance++;
