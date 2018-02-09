@@ -3,7 +3,7 @@ var machine;
 var prizeImages = [];
 var clawMachine;
 var prizes = [];
-var prizeNum = 15;
+var prizeNum = 19;
 var openClaw;
 var closedClaw;
 function preload(){
@@ -23,6 +23,9 @@ for(var i=0;i<prizeNum;i++){
 }
 
 function draw(){
+
+
+
   machine.show();
 machine.claw();
   if(machine.getting){
@@ -48,6 +51,8 @@ for(var i=0;i<prizeNum;i++){
 
 function keyPressed() {
   if (keyCode === 32) {
+machine.xSpeed = 3;
+      machine.ySpeed = 3;
     machine.getting = true;
   }
 }
@@ -59,11 +64,11 @@ function keyPressed() {
 class Prize{
 constructor(i){
   this.i = i;
-  console.log(parseInt(random(0,prizeImages.length )));
+
   this.img = prizeImages[parseInt(random(0,prizeImages.length))];
   this.velocity = createVector(0, 1);
   this.gravity = createVector(0, 0.4);
-  this.push = createVector(0,0)
+  this.push = createVector(0,0);
   this.position = createVector(random(machine.edges.topLeft.x,machine.edges.bottomRight.x),random(machine.edges.topLeft.y,machine.edges.bottomRight.y));
   }
   show(){
@@ -86,10 +91,18 @@ if(i !=this.i&& (dist(this.position.x,this.position.y,prizes[i].position.x,prize
   console.log(dist(this.position.x,this.position.y,prizes[i].position.x,prizes[i].position.y));
 if(prizes[i].position.x < this.position.x){
   this.push.x = 0.1
-  // prizes[i].push.x = -0.1
+this.push.x -=0.01
+// console.log(this.push.x);
+}else if(prizes[i].position.x > this.position.x){
+  this.push.x = -0.1
+
+  // console.log(this.push.x);
+this.push.x +=0.01
 }
 } else{
+  console.log(this.push.x);
   this.push.x = 0;
+  this.gravity.x = 0;
 }
 
 }
@@ -106,6 +119,7 @@ if(prizes[i].position.x < this.position.x){
 class Machine{
 constructor(){
   this.ySpeed = 3;
+  this.xSpeed = 3;
   this.getting = false;
 this.open = true;
    this.edges = {
@@ -117,6 +131,7 @@ this.open = true;
   this.y = this.edges.topLeft.y;
 }
 down(){
+
 this.y+=this.ySpeed;
 if(this.y > this.edges.bottomRight.y){
   this.open = false;
@@ -124,6 +139,13 @@ if(this.y > this.edges.bottomRight.y){
 }
 if(this.y === this.edges.topLeft.y){
   this.ySpeed = 0;
+  console.log(this.xSpeed);
+  this.x+=this.xSpeed;
+}
+if(this.x >= this.edges.bottomRight.x - openClaw.width/12){
+  this.xSpeed = 0;
+  this.open = true;
+  this.getting = false;
 }
 }
 
