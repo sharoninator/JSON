@@ -11,7 +11,9 @@ function preload(){
     prizeImages[1] = loadImage("prize2.png");
       prizeImages[2] = loadImage("prize3.png");
 prizeImages[3] = loadImage("prize4.png");
-
+prizeImages[4] = loadImage("prize5.png");
+  
+  
   openClaw = loadImage("openClaw.png");
   closedClaw = loadImage("closedClaw.png");
   clawMachine = loadImage("clawMachine.jpg");
