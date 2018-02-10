@@ -8,9 +8,9 @@ var openClaw;
 var closedClaw;
 function preload(){
   prizeImages[0] = loadImage("prize1.png");
-
-
     prizeImages[1] = loadImage("prize2.png");
+      prizeImages[2] = loadImage("prize3.png");
+prizeImages[3] = loadImage("prize4.png");
 
   openClaw = loadImage("openClaw.png");
   closedClaw = loadImage("closedClaw.png");
@@ -183,17 +183,17 @@ line(this.x + openClaw.width/24,this.edges.topLeft.y + 3, this.x + openClaw.widt
 }
 move(){
       if (keyIsDown(LEFT_ARROW)) {
-              machine.x-=3;
+              machine.x-=2;
           }
 
           if (keyIsDown(UP_ARROW)) {
-                  machine.y-=3;
+                  machine.y-=2;
               }
               if (keyIsDown(DOWN_ARROW)) {
-                      machine.y+=3;
+                      machine.y+=2;
                   }
                           if (keyIsDown(RIGHT_ARROW)) {
-                                  machine.x+=3;
+                                  machine.x+=2;
                               }
 
                             }
