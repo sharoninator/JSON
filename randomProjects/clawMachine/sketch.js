@@ -46,6 +46,7 @@ for(var i=0;i<prizeNum;i++){
   prizes[i].update();
   prizes[i].show();
   prizes[i].edges();
+    prizes[i].holding();
 }
 
 
@@ -65,6 +66,7 @@ machine.border();
 function keyPressed() {
   if (keyCode === 32 && !machine.getting) {
 machine.xSpeed = 3;
+
       machine.ySpeed = 3;
     machine.getting = true;
   }
@@ -77,12 +79,14 @@ machine.xSpeed = 3;
 class Prize{
 constructor(i){
   this.i = i;
+  this.grabbed = false;
+  this.onScreen = false;
   this.imgTemp = parseInt(random(0,prizeImages.length));
   this.img= prizeImages[this.imgTemp],
   this.velocity = createVector(0, 1);
   this.gravity = createVector(0, 0.4);
   this.push = createVector(0,0);
-  this.position = createVector(random(machine.edges.topLeft.x + 30,machine.edges.bottomRight.x - 30),random(machine.edges.topLeft.y,machine.edges.bottomRight.y - 30));
+  this.position = createVector(random(machine.edges.topLeft.x + 30,machine.edges.bottomRight.x - 30),random( (machine.edges.topLeft.y + machine.edges.bottomRight.y) / 2,machine.edges.bottomRight.y - 30));
   }
   show(){
 image(this.img,this.position.x,this.position.y, 30,30)
@@ -97,25 +101,34 @@ image(this.img,this.position.x,this.position.y, 30,30)
 if(this.position.y > machine.edges.bottomRight.y - 30){
   this.velocity.y = 0;
   this.gravity.y = 0;
+  this.position.y = machine.edges.bottomRight.y - 30;
 }
-
-// for(var i=0;i<prizes.length;i++){
-// if(i !=this.i&& (dist(this.position.x,this.position.y,prizes[i].position.x,prizes[i].position.y)  < 20  )){
-//
-//    this.position.y = random(machine.edges.topLeft.y,machine.edges.bottomRight.y);
-//    i=0;
-//
-// }
-// }
 
 
 
 
   }
+
+
+  holding(){
+    if(machine.getting && dist(machine.x + openClaw.width/24 ,machine.y + openClaw.width/24 + 7,this.position.x + 15,this.position.y + 15) <7 && machine.y > machine.edges.bottomRight.y - openClaw.height/12-10 || this.grabbed){
+    this.position.x = machine.x  +7;
+    this.position.y = machine.y + 20
+    this.grabbed = true;
+    }
+    if(this.position.y <= machine.edges.topLeft.y+30){
+      this.gravity.y = 0.4
+      this.velocity.y = 1;
+    }
+
+
+
+
+
 }
 
 
-
+}
 
 class Machine{
 constructor(){
@@ -146,14 +159,17 @@ if(this.x >= this.edges.bottomRight.x - openClaw.width/12){
   this.xSpeed = 0;
   this.open = true;
   this.getting = false;
+  for(var i=0;i<prizes.length;i++){
+    prizes[i].grabbed = false;
+  }
 }
 }
 
 
 show(){
+fill(255)
   image(clawMachine,0,0,clawMachine.width *  1.5,clawMachine.height * 1.5);
     rect(this.edges.topLeft.x,this.edges.topLeft.y,this.edges.bottomRight.x - this.edges.topLeft.x, this.edges.bottomRight.y - this.edges.topLeft.y);
-
 }
 claw(){
   if(!machine.open){
