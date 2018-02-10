@@ -65,9 +65,9 @@ machine.border();
 
 function keyPressed() {
   if (keyCode === 32 && !machine.getting) {
-machine.xSpeed = 3;
+machine.xSpeed = 2;
 
-      machine.ySpeed = 3;
+      machine.ySpeed = 2;
     machine.getting = true;
   }
 }
@@ -111,7 +111,7 @@ if(this.position.y > machine.edges.bottomRight.y - 30){
 
 
   holding(){
-    if(machine.getting && dist(machine.x + openClaw.width/24 ,machine.y + openClaw.width/24 + 7,this.position.x + 15,this.position.y + 15) <5 && machine.y > machine.edges.bottomRight.y - openClaw.height/12-10 || this.grabbed){
+    if(machine.getting && dist(machine.x + openClaw.width/24 ,machine.y + openClaw.width/24 + 7,this.position.x + 15,this.position.y + 15) <3 && machine.y > machine.edges.bottomRight.y - openClaw.height/12-10 || this.grabbed){
     this.position.x = machine.x  +7;
     this.position.y = machine.y + 20
     this.grabbed = true;
@@ -132,8 +132,8 @@ if(this.position.y > machine.edges.bottomRight.y - 30){
 
 class Machine{
 constructor(){
-  this.ySpeed = 3;
-  this.xSpeed = 3;
+  this.ySpeed = 2;
+  this.xSpeed = 2;
   this.getting = false;
 this.open = true;
    this.edges = {
@@ -151,7 +151,7 @@ if(this.y > this.edges.bottomRight.y - closedClaw.height/12){
   this.open = false;
   this.ySpeed*=-1;
 }
-if(this.y === this.edges.topLeft.y){
+if(this.y <= this.edges.topLeft.y){
   this.ySpeed = 0;
   this.x+=this.xSpeed;
 }
