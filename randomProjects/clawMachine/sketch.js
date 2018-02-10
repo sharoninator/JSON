@@ -111,7 +111,7 @@ if(this.position.y > machine.edges.bottomRight.y - 30){
 
 
   holding(){
-    if(machine.getting && dist(machine.x + openClaw.width/24 ,machine.y + openClaw.width/24 + 7,this.position.x + 15,this.position.y + 15) <7 && machine.y > machine.edges.bottomRight.y - openClaw.height/12-10 || this.grabbed){
+    if(machine.getting && dist(machine.x + openClaw.width/24 ,machine.y + openClaw.width/24 + 7,this.position.x + 15,this.position.y + 15) <5 && machine.y > machine.edges.bottomRight.y - openClaw.height/12-10 || this.grabbed){
     this.position.x = machine.x  +7;
     this.position.y = machine.y + 20
     this.grabbed = true;
