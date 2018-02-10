@@ -3,11 +3,15 @@ var machine;
 var prizeImages = [];
 var clawMachine;
 var prizes = [];
-var prizeNum = 19;
+var prizeNum = 6;
 var openClaw;
 var closedClaw;
 function preload(){
-  prizeImages = [loadImage("prize1.png")];
+  prizeImages[0] = loadImage("prize1.png");
+
+
+    prizeImages[1] = loadImage("prize2.png");
+
   openClaw = loadImage("openClaw.png");
   closedClaw = loadImage("closedClaw.png");
   clawMachine = loadImage("clawMachine.jpg");
@@ -18,39 +22,48 @@ for(var i=0;i<prizeNum;i++){
   prizes[i] = new Prize(i);
 
 }
-  createCanvas(600,575);
 
+for(var k=0;k<prizeNum;k++){
+for(var j=0;j<prizeNum;j++){
+
+
+var temp = Math.max(prizes[k].position.x,prizes[j].position.x) - Math.min(prizes[k].position.x,prizes[j].position.x);
+  if( j !== k && temp < 30 && temp!=0){
+    // console.log(temp)
+  prizes[k].position.x = random(machine.edges.topLeft.x,machine.edges.bottomRight.x-30)
+  console.log(prizes[k].position.x + " " + temp)
+ k  =0;
+j=0;
+  }
+}
+}
+  createCanvas(600,575);
 }
 
 function draw(){
-
-
-
   machine.show();
+for(var i=0;i<prizeNum;i++){
+  prizes[i].update();
+  prizes[i].show();
+  prizes[i].edges();
+}
+
+
 machine.claw();
-  if(machine.getting){
-    machine.down();
-  }else{
+if(machine.getting){
+  machine.down();
+}else{
 machine.move();
 
 machine.border();
 }
 
 
-for(var i=0;i<prizeNum;i++){
-  prizes[i].update();
-  prizes[i].show();
-  prizes[i].edges();
-
-}
-
-
-
 }
 
 
 function keyPressed() {
-  if (keyCode === 32) {
+  if (keyCode === 32 && !machine.getting) {
 machine.xSpeed = 3;
       machine.ySpeed = 3;
     machine.getting = true;
@@ -64,15 +77,15 @@ machine.xSpeed = 3;
 class Prize{
 constructor(i){
   this.i = i;
-
-  this.img = prizeImages[parseInt(random(0,prizeImages.length))];
+  this.imgTemp = parseInt(random(0,prizeImages.length));
+  this.img= prizeImages[this.imgTemp],
   this.velocity = createVector(0, 1);
   this.gravity = createVector(0, 0.4);
   this.push = createVector(0,0);
-  this.position = createVector(random(machine.edges.topLeft.x,machine.edges.bottomRight.x),random(machine.edges.topLeft.y,machine.edges.bottomRight.y));
+  this.position = createVector(random(machine.edges.topLeft.x + 30,machine.edges.bottomRight.x - 30),random(machine.edges.topLeft.y,machine.edges.bottomRight.y - 30));
   }
   show(){
-image(this.img,this.position.x,this.position.y, this.img.width/8,this.img.width/8)
+image(this.img,this.position.x,this.position.y, 30,30)
   }
   update(){
       this.velocity.add(this.push);
@@ -81,31 +94,19 @@ image(this.img,this.position.x,this.position.y, this.img.width/8,this.img.width/
   }
 
   edges(){
-if(this.position.y > machine.edges.bottomRight.y - this.img.height/8){
+if(this.position.y > machine.edges.bottomRight.y - 30){
   this.velocity.y = 0;
   this.gravity.y = 0;
 }
 
-for(var i=0;i<prizes.length;i++){
-if(i !=this.i&& (dist(this.position.x,this.position.y,prizes[i].position.x,prizes[i].position.y)  < 30  )){
-  console.log(dist(this.position.x,this.position.y,prizes[i].position.x,prizes[i].position.y));
-if(prizes[i].position.x < this.position.x){
-  this.push.x = 0.1
-this.push.x -=0.01
-// console.log(this.push.x);
-}else if(prizes[i].position.x > this.position.x){
-  this.push.x = -0.1
-
-  // console.log(this.push.x);
-this.push.x +=0.01
-}
-} else{
-  console.log(this.push.x);
-  this.push.x = 0;
-  this.gravity.x = 0;
-}
-
-}
+// for(var i=0;i<prizes.length;i++){
+// if(i !=this.i&& (dist(this.position.x,this.position.y,prizes[i].position.x,prizes[i].position.y)  < 20  )){
+//
+//    this.position.y = random(machine.edges.topLeft.y,machine.edges.bottomRight.y);
+//    i=0;
+//
+// }
+// }
 
 
 
@@ -133,13 +134,12 @@ this.open = true;
 down(){
 
 this.y+=this.ySpeed;
-if(this.y > this.edges.bottomRight.y){
+if(this.y > this.edges.bottomRight.y - closedClaw.height/12){
   this.open = false;
   this.ySpeed*=-1;
 }
 if(this.y === this.edges.topLeft.y){
   this.ySpeed = 0;
-  console.log(this.xSpeed);
   this.x+=this.xSpeed;
 }
 if(this.x >= this.edges.bottomRight.x - openClaw.width/12){
