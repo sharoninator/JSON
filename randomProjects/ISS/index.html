@@ -8,11 +8,12 @@ canvas{
    background:url(http://webiconspng.com/wp-content/uploads/2017/09/World-Map-PNG-Image-90101.png);
       background-size: 1280px 630px;
 }
+
  </style>
 </head>
 <body>
 <canvas id="myCanvas" width="1280" height="630"  >
-<img src="https://i.imgur.com/07i3mTb.png" id="unblock">
+<img src="https://i.imgur.com/07i3mTb.png" id="unblock" width = "240" height = "240">
   <img src = "https://smd-prod.s3.amazonaws.com/science-red/s3fs-public/styles/large/public/thumbnails/image/ISS-sm.png?itok=2zzSZy7W" width="40" height="40" id = "ISS">
 
 <script type="text/javascript">
@@ -58,7 +59,7 @@ function draw(){
   try{
   request.send();
 }catch(err){
-  console.log("3232")
+ctx.drawImage(document.getElementById("unblock"),c.width-400,10,400,200)
 }
   request.onload = function() {
     ship.clear();
