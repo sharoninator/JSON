@@ -31,14 +31,15 @@ var request = new XMLHttpRequest();
 class ISS{
   constructor(){
     this.x;
-    this.y
+    this.y;
+    console.log(this.x)
      this.img=document.getElementById("ISS");
   }
   update(data){
 
     this.y = (630/180)*(90-(parseFloat(data.iss_position.latitude)) );
    this.x = (1280 / 360) * (180+(parseFloat(data.iss_position.longitude)));
-ctx.font = "bold 10px";
+ctx.font = "bold 200px";
 ctx.fillText("Longitude: " + data.iss_position.longitude, this.x -55, this.y - 20);
 ctx.fillText("Latitude: " + data.iss_position.latitude, this.x -55, this.y - 10);
   }
@@ -50,23 +51,27 @@ ctx.fillText("Latitude: " + data.iss_position.latitude, this.x -55, this.y - 10)
     ctx.fillRect(0,0,0,0);
 ctx.clearRect(0,0,c.width,c.height);
   }
+  error(){
+    ctx.font="31px Bold";
+      ctx.fillText("In order to get the live coordinates of the ISS, you need to be able to communicate with the website.",10,c.height-10)
+    ctx.drawImage(document.getElementById("unblock"),c.width-400,10,400,200)
+  }
 }
 var ship = new ISS();
 function draw(){
 
   request.open('GET', url);
   request.responseType = 'json';
-  try{
+
   request.send();
-}catch(error){
-ctx.font="31px Bold";
-  ctx.fillText("In order to get the live coordinates of the ISS, you need to be able to communicate with the website.",10,c.height-10)
-ctx.drawImage(document.getElementById("unblock"),c.width-400,10,400,200)
-}
+
+
   request.onload = function() {
     ship.clear();
       ship.update(request.response);
 ship.show();
+if(ship.x == null){ship.error();
+}
 }
 }
 </script>
