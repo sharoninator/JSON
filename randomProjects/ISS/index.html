@@ -58,10 +58,10 @@ ctx.clearRect(0,0,c.width,c.height);
 }
 var ship = new ISS();
 function draw(){
+ 
 
   request.open('GET', url);
   request.responseType = 'json';
-  if(ship.x == null){
     ship.error();
   request.send();
 }
