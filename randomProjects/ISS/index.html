@@ -32,7 +32,6 @@ class ISS{
   constructor(){
     this.x;
     this.y;
-    console.log(this.x)
      this.img=document.getElementById("ISS");
   }
   update(data){
@@ -62,20 +61,18 @@ function draw(){
 
   request.open('GET', url);
   request.responseType = 'json';
-
+  if(ship.x == null){
+    ship.error();
   request.send();
-
+}
 
   request.onload = function() {
     ship.clear();
       ship.update(request.response);
 ship.show();
-if(ship.x == null){
- ship.error(); 
- console.log(32)
-}
+
 }
 }
 </script>
 </body>
-</html>﻿
+</html>
