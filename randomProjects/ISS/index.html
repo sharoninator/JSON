@@ -57,7 +57,7 @@ function draw(){
   request.open('GET', url);
   request.responseType = 'json';
   try{
-  requeest.send();
+  request.send();
 }catch(err){
 ctx.font="31px Bold";
   ctx.fillText("In order to get the live coordinates of the ISS, you need to be able to communicate with the website.",10,c.height-10)
