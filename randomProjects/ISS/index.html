@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<head>
+ <meta charset="UTF-8">
+ <style type="text/css">
+canvas{
+  border:3px solid #d3d3d3;
+  position: absolute;
+   background:url(http://webiconspng.com/wp-content/uploads/2017/09/World-Map-PNG-Image-90101.png);
+      background-size: 1280px 630px;
+}
+ </style>
+</head>
+<body>
+<canvas id="myCanvas" width="1280" height="630"  >
+  <img src = "https://smd-prod.s3.amazonaws.com/science-red/s3fs-public/styles/large/public/thumbnails/image/ISS-sm.png?itok=2zzSZy7W" width="40" height="40" id = "ISS">
+
+<script type="text/javascript">
+"use strict";
+setInterval(draw,100);
+
+var x = 0;
+var y = 0;
+  var c = document.getElementById("myCanvas");
+  var ctx = c.getContext("2d");
+  var url = "http://api.open-notify.org/iss-now.json";
+var request = new XMLHttpRequest();
+
+
+class ISS{
+  constructor(){
+    this.x;
+    this.y
+     this.img=document.getElementById("ISS");
+  }
+  update(data){
+
+    this.y = (630/180)*(90-(parseFloat(data.iss_position.latitude)) );
+   this.x = (1280 / 360) * (180+(parseFloat(data.iss_position.longitude)));
+ctx.font = "bold 10px";
+ctx.fillText("Longitude: " + data.iss_position.longitude, this.x -55, this.y - 20);
+ctx.fillText("Latitude: " + data.iss_position.latitude, this.x -55, this.y - 10);
+  }
+  show(){
+
+    ctx.drawImage(this.img,this.x -55 ,this.y ,70,70);
+  }
+  clear(){
+    ctx.fillRect(0,0,0,0);
+ctx.clearRect(0,0,c.width,c.height);
+  }
+}
+var ship = new ISS();
+function draw(){
+  request.open('GET', url);
+  request.responseType = 'json';
+  request.send();
+  request.onload = function() {
+    ship.clear();
+      ship.update(request.response);
+ship.show();
+}
+}
+</script>
+</body>
+</html>﻿
