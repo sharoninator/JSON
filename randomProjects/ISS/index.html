@@ -12,6 +12,7 @@ canvas{
 </head>
 <body>
 <canvas id="myCanvas" width="1280" height="630"  >
+<img src="https://i.imgur.com/07i3mTb.png" id="unblock">
   <img src = "https://smd-prod.s3.amazonaws.com/science-red/s3fs-public/styles/large/public/thumbnails/image/ISS-sm.png?itok=2zzSZy7W" width="40" height="40" id = "ISS">
 
 <script type="text/javascript">
@@ -51,9 +52,14 @@ ctx.clearRect(0,0,c.width,c.height);
 }
 var ship = new ISS();
 function draw(){
+
   request.open('GET', url);
   request.responseType = 'json';
+  try{
   request.send();
+}catch(err){
+  console.log("3232")
+}
   request.onload = function() {
     ship.clear();
       ship.update(request.response);
@@ -62,4 +68,4 @@ ship.show();
 }
 </script>
 </body>
-</html>﻿
+</html>
