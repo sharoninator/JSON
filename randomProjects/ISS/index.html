@@ -25,17 +25,20 @@ document.onclick = function(){
 fixed = true;
 document.getElementById("help").innerHTML = "";
 };
-
-function loaded(){
+function getData(){
+  request.open('GET', url);
+  request.responseType = 'json';
   request.send();
 }
+
+
 var x = 0;
 var y = 0;
   var c = document.getElementById("myCanvas");
   var ctx = c.getContext("2d");
   var url = "http://api.open-notify.org/iss-now.json";
 var request = new XMLHttpRequest();
-loaded();
+
 
 class ISS{
   constructor(){
@@ -66,15 +69,14 @@ ctx.clearRect(0,0,c.width,c.height);
   }
 }
 var ship = new ISS();
-
+getData();
 function draw(){
 
-  request.open('GET', url);
-  request.responseType = 'json';
+
 if(!fixed){
     ship.error();
 }else{
-    request.send();
+    getData();
 }
 
 
@@ -91,4 +93,4 @@ ship.show();
 }
 </script>
 </body>
-</html>﻿
+</html>
