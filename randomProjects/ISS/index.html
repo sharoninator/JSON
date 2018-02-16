@@ -25,17 +25,20 @@ document.onclick = function(){
 fixed = true;
 document.getElementById("help").innerHTML = "";
 };
+
+function loaded(){
+  request.send();
+}
 var x = 0;
 var y = 0;
   var c = document.getElementById("myCanvas");
   var ctx = c.getContext("2d");
   var url = "http://api.open-notify.org/iss-now.json";
 var request = new XMLHttpRequest();
-
+loaded();
 
 class ISS{
   constructor(){
-    request.send();
     this.x;
     this.y;
      this.img=document.getElementById("ISS");
