@@ -62,14 +62,17 @@ ctx.clearRect(0,0,c.width,c.height);
   }
 }
 var ship = new ISS();
+request.send();
 function draw(){
 
   request.open('GET', url);
   request.responseType = 'json';
 if(!fixed){
     ship.error();
+}else{
+    request.send();
 }
-  request.send();
+
 
 
 
