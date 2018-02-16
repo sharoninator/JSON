@@ -67,11 +67,11 @@ function draw(){
   request.open('GET', url);
   request.responseType = 'json';
 
-
-if(fixed){
   request.send();
-}else{
-    ship.error();
+if(!fixed){
+  ship.error();
+} else{
+  request.send()
 }
 
   request.onload = function() {
