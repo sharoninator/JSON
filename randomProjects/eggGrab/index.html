@@ -70,6 +70,7 @@ this.velocity+=this.gravity;
 }
 offScreen(){
   if(this.y > canvas.height || this.hit){
+    this.hit = false;
     this.y = Math.random() * (-canvas.height*1.5);
   this.x = Math.random() * canvas.width;
   this.velocity =0.001;
