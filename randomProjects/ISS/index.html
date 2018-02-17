@@ -51,8 +51,8 @@ class ISS{
     this.y = (630/180)*(90-(parseFloat(data.iss_position.latitude))) ;
    this.x = (1280 / 360) * (180+(parseFloat(data.iss_position.longitude)));
   ctx.font="10px Bold";
-ctx.fillText("Longitude: " + data.iss_position.longitude, this.x -55, this.y - 20);
-ctx.fillText("Latitude: " + data.iss_position.latitude, this.x -55, this.y - 10);
+ctx.fillText("Longitude: " + data.iss_position.longitude, this.x, this.y - 20);
+ctx.fillText("Latitude: " + data.iss_position.latitude, this.x, this.y - 10);
   }
   show(){
 
