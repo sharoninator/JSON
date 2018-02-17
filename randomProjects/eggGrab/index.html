@@ -44,32 +44,53 @@ move["flyingLeft2"] = document.getElementById("flyingLeft2");
 move["flyingRight1"] = document.getElementById("flyingRight1");
 move["flyingRight2"] = document.getElementById("flyingRight2");
 var eggImg = document.getElementById("egg");
+var score = 0;
+
 
 class Egg{
 constructor(){
-  this.velocity =1;
-  this.gravity = 2
+  this.hit = false;
+  this.velocity =0.001;
+  this.gravity = 0.002;
   this.x = Math.random() * canvas.width;
   this.y = Math.random() * (-canvas.height*2);
+  if(this.y > -90){
+    this.y = -200;
+  }
 }
 show(){
+
   ctx.drawImage(eggImg,this.x,this.y);
 }
 update(){
-this.veloicty+=this.gravity;
+this.velocity+=this.gravity;
   this.y+=this.velocity;
+
 
 }
 offScreen(){
-  if(this.y > canvas.height){
-    this.y = Math.random() * (-canvas.height*2);
+  if(this.y > canvas.height || this.hit){
+    this.y = Math.random() * (-canvas.height*1.5);
+  this.x = Math.random() * canvas.width;
+  this.velocity =0.001;
+  this.gravity = 0.002;
+    if(this.y > -90){
+      this.y = -200;
+    }
   }
 }
+collect(){
+   var a = Math.max(this.x + 32,bird.x + 43) - Math.min(this.x + 32,bird.x + 43) ;
+ var b = Math.max(this.y +32,bird.y +31 ) - Math.min(this.y +32,bird.y +31 );
+ if(Math.sqrt(a*a + b*b) < 45 ){
+score++;
+this.hit = true;
+}
 
 
 
 }
-
+}
 
 
 class Bird{
@@ -171,11 +192,13 @@ function draw(){
 ctx.clearRect(0,0,canvas.width,canvas.height);
   ctx.drawImage(document.getElementById("background"),0,0,canvas.width,canvas.height);
 cnt++;
+ctx.font = "30px Arial";
+ctx.fillText(score.toString(),canvas.width-70,30);
 
 for(var i=0;i<10;i++){
+    eggs[i].update()
   eggs[i].show();
-  eggs[i].update()
-
+eggs[i].collect();
   eggs[i].offScreen()
 }
 
