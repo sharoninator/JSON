@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<head>
+ <meta charset="UTF-8">
+ <style type="text/css">
+canvas{
+  border:3px solid #d3d3d3;
+  position: absolute;
+  background-image: url("hehe.jpg");
+      background-size: 600px 500px;
+}
+.bird{
+  display:none;
+}
+#background{
+  display:none;
+}
+ </style>
+</head>
+<body>
+  <img id = "background" src = "hehe.jpg">
+<img id = "standingLeft" src = "standingLeft.png" class = "bird">
+<img id = "standingRight" src="standingRight.png"class = "bird">
+<img id = "flyingLeft1" src = "flyingLeft1.png"class = "bird">
+<img id ="flyingLeft2"src="flyingLeft2.png"class = "bird">
+<img id= "flyingRight1" src="flyingRight1.png"class = "bird">
+<img id ="flyingRight2"src="flyingRight2.png"class = "bird">
+
+
+
+  <canvas id="myCanvas" width="600" height="500"  >
+<script type="text/javascript">
+"use strict";
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+  var move = [];
+  move["standingRight"] = document.getElementById("standingRight");
+move["standingLeft"] = document.getElementById("standingLeft");
+move["flyingLeft1"] = document.getElementById("flyingLeft1");
+move["flyingLeft2"] = document.getElementById("flyingLeft2");
+move["flyingRight1"] = document.getElementById("flyingRight1");
+move["flyingRight2"] = document.getElementById("flyingRight2");
+
+
+
+class Bird{
+  constructor(){
+    this.x= canvas.width/2;
+    this.y = canvas.height/2;
+    this.dirX = 2;
+    this.dirY;
+    this.frame =  move["flyingRight1"];
+   }
+   edges(){
+   }
+   show(){
+      ctx.drawImage(this.frame,this.x,this.y);
+if(cnt%120<60){
+  if(this.dirX > 0){
+    this.frame = move["flyingRight1"];
+  }
+  if(this.dirX<0){
+    this.frame = move["flyingLeft1"];
+  }
+
+
+
+
+
+
+} else{
+  if(this.dirX > 0 ){
+    this.frame = move["flyingRight2"];
+  }
+  if(this.dirX<0){
+    this.frame = move["flyingLeft2"];
+  }
+}
+   }
+   move(){
+     if(key.keyCode === 38){
+this.ySpeed = -2;
+       }
+       if(key.keyCode === 40){
+this.ySpeed = 2;
+       }
+       if(key.keyCode === 37){
+this.xSpeed = -2;
+       }
+       if(key.keyCode === 39){
+this.xSpeed = 2;
+       }
+       this.x+=this.xSpeed;
+       this.y+=this.ySpeed;
+       if(this.xSpeed!=0){
+this.dirX = this.xSpeed;
+}
+this.dirY = this.ySpeed;
+   }
+   update(){
+
+   }
+}
+
+setInterval(draw,5);
+
+var key;
+var cnt = 0;
+var keyDown = false;
+var bird = new Bird();
+
+
+function draw(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.drawImage(document.getElementById("background"),0,0,canvas.width,canvas.height);
+
+cnt++;
+
+  bird.show();
+  bird.update();
+
+if(keyDown){
+  bird.move();
+} else{
+  bird.xSpeed = 0;
+  bird.ySpeed = 0;
+}
+}
+
+
+window.onkeyup = function(e){
+keyDown = false;
+  key = e;
+}
+window.onkeydown = function(e) {
+keyDown = true;
+key = e;
+
+}
+</script>
+</body>
+</html>﻿
