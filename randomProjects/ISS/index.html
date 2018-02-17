@@ -49,14 +49,14 @@ class ISS{
   update(data){
 
     this.y = (630/180)*(90-(parseFloat(data.iss_position.latitude))) ;
-   this.x = (1280 / 360) * (180+(parseFloat(data.iss_position.longitude)) - 15);
+   this.x = (1280 / 360) * (180+(parseFloat(data.iss_position.longitude)));
   ctx.font="10px Bold";
 ctx.fillText("Longitude: " + data.iss_position.longitude, this.x -55, this.y - 20);
 ctx.fillText("Latitude: " + data.iss_position.latitude, this.x -55, this.y - 10);
   }
   show(){
 
-    ctx.drawImage(this.img,this.x -55 ,this.y ,70,70);
+    ctx.drawImage(this.img,this.x,this.y ,70,70);
   }
   clear(){
     ctx.fillRect(0,0,0,0);
