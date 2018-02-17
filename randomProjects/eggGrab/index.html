@@ -70,7 +70,6 @@ this.velocity+=this.gravity;
 }
 offScreen(){
   if(this.y > canvas.height || this.hit){
-   this.hit = false;
     this.y = Math.random() * (-canvas.height*1.5);
   this.x = Math.random() * canvas.width;
   this.velocity =0.001;
@@ -87,9 +86,6 @@ collect(){
 score++;
 this.hit = true;
 }
-
-
-
 }
 }
 
@@ -127,10 +123,7 @@ if(this.dirX < 0){
   this.frame = move["standingLeft"]
 }
 
-
 if(cnt%120<60 && this.y < canvas.width - 200){
-
-
 
   if(this.dirX > 0){
     this.frame = move["flyingRight1"];
@@ -138,10 +131,6 @@ if(cnt%120<60 && this.y < canvas.width - 200){
   if(this.dirX<0){
     this.frame = move["flyingLeft1"];
   }
-
-
-
-
 
 
 } else if (this.y < canvas.width - 200){
@@ -203,7 +192,6 @@ eggs[i].collect();
   eggs[i].offScreen()
 }
 
-
 bird.edges();
   bird.show();
   bird.update();
@@ -215,7 +203,6 @@ if(keyDown){
   bird.ySpeed = 0;
 }
 }
-
 
 window.onkeyup = function(e){
 keyDown = false;
