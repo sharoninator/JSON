@@ -1,0 +1,9 @@
+var url = prompt("Page to reroute to once trigger key is pressed: ");
+var trigger = prompt("Trigger key:").charAt(0);
+
+
+window.onkeydown = function(key){
+  if(key.key === trigger){
+    window.location = url;
+  }
+}
