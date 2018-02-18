@@ -1,4 +1,4 @@
-var url = prompt("Page to reroute to once trigger key is pressed: ");
+var url = prompt("Decoy page URL: \n Example: https://www.google.com");
 var trigger = prompt("Trigger key:").charAt(0);
 
 
