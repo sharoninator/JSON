@@ -1,9 +1,3 @@
 var url = prompt("Decoy page URL: \n Example: https://www.google.com");
 var trigger = prompt("Trigger key:").charAt(0);
-
-
-window.onkeydown = function(key){
-  if(key.key === trigger){
-    window.location = url;
-  }
-}
+window.onkeydown = function(key){ if(key.key === trigger){ window.location = url; } }
