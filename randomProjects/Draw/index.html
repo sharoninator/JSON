@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<head>
+ <meta charset="UTF-8">
+ <style type="text/css">
+ body{
+   cursor: pointer;
+ }
+canvas{
+  border:1px solid #c3c3c3;
+  position:absolute;
+  top: 100px;
+  left: 100px;
+}
+
+#color{
+  position: absolute;
+  left: 3px;
+  top: 370px;
+  width: 80px;
+  height: 20px;
+}
+#crosshair{
+  width:50px;
+  height:50px;
+}
+#eraser, #marker{
+  width:50px;
+  height:50px;
+  transition: width 1s, height 1s,top 2s, left 2s;
+}
+#eraser{
+  position:absolute;
+  top: 290px;
+  left:19px;
+}
+#marker{
+  position: absolute;
+  top: 200px;
+  left: 19px;
+}
+#eraser:hover, #marker:hover {
+  width:70px;
+  height:70px;
+}
+#paint{
+  position: absolute;
+  width:100px;
+  height:100px;
+  top: 300px;
+}
+#reset{
+  position: absolute;
+  top: 140px;
+color: blue;
+border: 1px solid;
+background: lightblue;
+padding: 8px 15px 8px;
+border-radius: 10%;
+transition: background-color 1.2s;
+}
+#reset:hover{
+  background-color: #0099f2;
+}
+
+ </style>
+</head>
+<body>
+  <button onclick = "location.reload()" id = "reset">Reset</button>
+  <img src = "marker.png" id = "marker" onclick = "grid.eraser = false">
+  <img src = "eraser.png" id = "eraser" onclick = "grid.erase()">
+  <input type = "color" id = "color" value = "#ff0000" onchange = "grid.getColor()">
+
+  <canvas id="myCanvas" width="450" height="450"> </canvas>
+
+<script type="text/javascript">
+var isGrid = confirm("Would you like a grid on your canvas?");
+var color = document.getElementById("color").value;
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+size = 15;
+Gsize = canvas.width/size;
+var mouseX;
+var mouseY;
+var drag = false;
+
+class Grid{
+  constructor(){
+    this.eraser = false;
+  }
+  icon(){
+if(this.eraser){
+}
+  }
+  square(){
+    var x = Math.floor(mouseX/Gsize) * Gsize;
+    var y = Math.floor(mouseY/Gsize) * Gsize;
+    if(this.eraser){
+      ctx.fillStyle = "#ffffff";
+    } else{
+    ctx.fillStyle = color;
+  }
+    ctx.fill();
+    ctx.fillRect(x,y,Gsize,Gsize);
+    ctx.stroke();
+  }
+  getColor(){
+    color = document.getElementById("color").value
+  }
+ drawGrid(){
+
+  ctx.beginPath();
+  for(var x=0;x<canvas.width;x+=Gsize){
+  ctx.moveTo(x, 0);
+  ctx.lineTo(x, canvas.height);
+  ctx.stroke();
+}
+for(var y=0;y<canvas.height;y+=Gsize){
+  ctx.moveTo(0, y);
+  ctx.lineTo(canvas.width, y);
+  ctx.stroke();
+}
+}
+erase(){
+
+  if(this.eraser){
+    this.eraser = false;
+  } else{
+
+    this.eraser = true;
+  }
+}
+}
+var grid = new Grid();
+if(isGrid){
+   grid.drawGrid();
+}
+document.onmousedown = function(){ drag = true; }
+  document.onmouseup = function(){drag = false;}
+
+onmousemove = function(e){
+  grid.icon();
+if(drag){
+  mouseX = e.clientX - 100;
+  mouseY =  e.clientY - 100;
+
+  grid.square();
+}
+}
+
+</script>
+</body>
+</html>
