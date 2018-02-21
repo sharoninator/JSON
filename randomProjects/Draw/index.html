@@ -121,15 +121,10 @@ for(var y=0;y<canvas.height;y+=Gsize){
 }
 }
 erase(){
-
-  if(this.eraser){
-    this.eraser = false;
-  } else{
-
     this.eraser = true;
   }
 }
-}
+
 var grid = new Grid();
 if(isGrid){
    grid.drawGrid();
