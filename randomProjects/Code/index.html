@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<head>
+ <meta charset="UTF-8">
+ <style type="text/css">
+#code{
+  top:0px;
+  position: absolute;
+  left:49%;
+  height:99%;
+  width:50%;
+  border: 2px solid;
+}
+#input{
+  width:20%;
+  height:100%;
+}
+ </style>
+</head>
+<body>
+  <div id = "code"></div>
+<textarea id = "input">JavaScript/HTML</textarea>
+<script type="text/javascript">
+setInterval(function(){
+  document.getElementById("code").innerHTML = document.getElementById("input").value;
+},100)
+</script>
+</body>
+</html>
