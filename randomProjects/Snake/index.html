@@ -16,7 +16,10 @@ canvas{
 "use strict";
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
-var Gsize = 10;
+var Gsize = parseInt(prompt("Enter a number from 5 to 50:"));
+if(Gsize < 5 ||| Gsize > 50){
+location.reload();
+}
 var Gstatus = [];
 function link(x,y){
   this.x = x;
