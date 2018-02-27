@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<head>
+ <meta charset="UTF-8">
+ <style type="text/css">
+
+canvas{
+  border:3px solid #d3d3d3;
+  position: absolute;
+}
+#snowflake{
+  display:none;
+}
+ </style>
+</head>
+<canvas id="myCanvas" width="600" height="500"  >
+<img src = "snowflake.png" id = "snowflake"></img>
+<body>
+<script type="text/javascript">
+"use strict";
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+
+class Snow{
+  constructor(){
+    this.snowflake = Math.floor(Math.random() * 15) === 10;
+    this.x = Math.random() * canvas.width;
+
+    this.y = -Math.random() * canvas.height;
+    this.gravity = Math.random();
+    this.r = this.gravity*7;
+    this.temp = this.gravity;
+    this.vel = this.gravity/2;
+
+  }
+
+  update(){
+    this.temp *= mouseY/(canvas.height/2);
+    this.vel+=this.temp;
+    this.y+=this.vel;
+this.x += wind;
+this.temp = this.gravity;
+  }
+  offScreen(){
+  this.y = -Math.random() * canvas.height;
+  this.x = Math.random() * canvas.width;
+  // if(Math.random() < 0.1){
+  //   this.x = Math.random() * -(canvas.width/10);
+  // } else if(Math.random() > 0.9){
+  //   this.x = canvas.width + (Math.random() * canvas.width/10)
+  // }
+  this.snowflake = Math.floor(Math.random() * 15) === 10;
+
+
+  this.vel = 1;
+  }
+  show(){
+    if(this.snowflake){
+      ctx.drawImage(document.getElementById("snowflake"),this.x,this.y,this.r * 7,this.r * 7)
+    } else{
+    ctx.fillStyle = "#fffdf7";
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,this.r,0,2*Math.PI);
+    ctx.fill();
+  }
+  }
+
+}
+
+function clear(){
+  ctx.fillStyle = "#00c7ff";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+}
+var mouseY;
+onmousemove = function(e){
+  mouseY = e.clientY
+}
+var wind = 0;
+var delay = 7000;
+setInterval(function(){
+ wind = Math.random() * 4;
+if(Math.random() > 0.5){
+  wind = - wind;
+}
+},delay)
+
+
+var amt = 200;
+var snowballs = [];
+for(var i=0;i<amt;i++){
+  snowballs[i] = new Snow();
+}
+var loop = setInterval(draw,60)
+function draw(){
+  clear();
+  for(var i=0;i<amt;i++){
+    snowballs[i].show();
+    snowballs[i].update();
+    if(snowballs[i].y > canvas.height + snowballs[i].r){
+      snowballs[i].offScreen();
+    }
+  }
+}
+
+</script>
+</body>
+</html>
