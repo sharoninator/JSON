@@ -27,31 +27,39 @@ class Snow{
 
     this.y = -Math.random() * canvas.height;
     this.gravity = Math.random();
+    this.velocity = this.gravity/2;
     this.r = this.gravity*7;
     this.temp = this.gravity;
-    this.vel = this.gravity/2;
+
+if(Math.random() < 0.1){
+  this.x = Math.random() * -(canvas.width/10);
+} else if(Math.random() > 0.9){
+  this.x = canvas.width + (Math.random() * canvas.width/10)
+}
 
   }
 
   update(){
+console.log(wind)
     this.temp *= mouseY/(canvas.height/2);
-    this.vel+=this.temp;
-    this.y+=this.vel;
+
+    this.velocity += this.temp;
+this.y +=this.velocity;
 this.x += wind;
 this.temp = this.gravity;
   }
   offScreen(){
   this.y = -Math.random() * canvas.height;
   this.x = Math.random() * canvas.width;
-  // if(Math.random() < 0.1){
-  //   this.x = Math.random() * -(canvas.width/10);
-  // } else if(Math.random() > 0.9){
-  //   this.x = canvas.width + (Math.random() * canvas.width/10)
-  // }
+  if(Math.random() < 0.1){
+    this.x = Math.random() * -(canvas.width/10);
+  } else if(Math.random() > 0.9){
+    this.x = canvas.width + (Math.random() * canvas.width/10)
+  }
   this.snowflake = Math.floor(Math.random() * 15) === 10;
 
 
-  this.vel = 1;
+  this.velocity = 1;
   }
   show(){
     if(this.snowflake){
@@ -70,18 +78,14 @@ function clear(){
   ctx.fillStyle = "#00c7ff";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 }
-var mouseY;
+var mouseY  = canvas.height/2;
+var mouseX =canvas.width/2;
 onmousemove = function(e){
   mouseY = e.clientY
+  mouseX = e.clientX;
 }
 var wind = 0;
-var delay = 7000;
-setInterval(function(){
- wind = Math.random() * 4;
-if(Math.random() > 0.5){
-  wind = - wind;
-}
-},delay)
+
 
 
 var amt = 200;
@@ -92,6 +96,7 @@ for(var i=0;i<amt;i++){
 var loop = setInterval(draw,60)
 function draw(){
   clear();
+  wind = (mouseX/(canvas.width/2)-1) * 4;
   for(var i=0;i<amt;i++){
     snowballs[i].show();
     snowballs[i].update();
