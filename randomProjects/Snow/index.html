@@ -3,22 +3,27 @@
  <meta charset="UTF-8">
  <style type="text/css">
 
-canvas{
+#myCanvas{
   border:3px solid #d3d3d3;
   position: absolute;
+width: 100%;
+height: 100%;
 }
 #snowflake{
   display:none;
 }
  </style>
 </head>
-<canvas id="myCanvas" width="600" height="500"  >
+<canvas id="myCanvas" width="600px" height="1200px"  >
 <img src = "snowflake.png" id = "snowflake"></img>
 <body>
 <script type="text/javascript">
 "use strict";
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
+canvas.width = screen.width
+canvas.height = screen.height;
+console.log(canvas.width)
 
 class Snow{
   constructor(){
@@ -40,7 +45,6 @@ if(Math.random() < 0.1){
   }
 
   update(){
-console.log(wind)
     this.temp *= mouseY/(canvas.height/2);
 
     this.velocity += this.temp;
@@ -96,7 +100,7 @@ for(var i=0;i<amt;i++){
 var loop = setInterval(draw,60)
 function draw(){
   clear();
-  wind = (mouseX/(canvas.width/2)-1) * 4;
+  wind = (mouseX/(canvas.width/2)-1) * 8;
   for(var i=0;i<amt;i++){
     snowballs[i].show();
     snowballs[i].update();
