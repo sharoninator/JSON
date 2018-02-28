@@ -2,15 +2,23 @@
 <head>
  <meta charset="UTF-8">
  <style type="text/css">
+ #score{
+position: absolute;
+top: -10px;
+left: 200px;
+color: #079193;
+ }
 canvas{
   border:3px solid #d3d3d3;
   position: absolute;
+  top:50px;
       background-size: 500px 500px;
 }
 
  </style>
 </head>
 <body>
+  <h1 id ="score">Score: 0</h1>
 <canvas id="myCanvas" width="500" height="500"  >
 <script type="text/javascript">
 "use strict";
@@ -69,9 +77,7 @@ class Snake{
     links[2] = new link(3,4);
   } // constructor
   moveSnake(){
-    console.log("link.length:" + this.length)
     if(this.grow){
-      console.log("link.length-GROW:" + links[(this.length-1)].x);
       links[this.length] = new link(links[(this.length-1)].x,links[(this.length-1)].y);
 
     } else {
@@ -82,12 +88,14 @@ class Snake{
       links[i].x = (links[i-1].x );
       links[i].y = (links[i-1].y );
     }
-    if(this.grow){ this.length++; this.grow = false;console.log("update-lenght:" + this.length)}
+    if(this.grow){ this.length++; this.grow = false;}
     if(this.dir === "Right") { links[0].y = links[0].y ; links[0].x++; if(links[0].x == Gsize) {links[0].x = 0 } }
     if(this.dir === "Left")  { links[0].y = links[0].y ; links[0].x--; if(links[0].x == -1) {links[0].x = Gsize - 1; } }
     if(this.dir === "Up")    { links[0].x = links[0].x ; links[0].y--; if(links[0].y == -1) {links[0].y = Gsize - 1 } }
     if(this.dir === "Down")  { links[0].x = links[0].x ; links[0].y++; if(links[0].y == Gsize) {links[0].y = 0 } }
-    if(Gstatus[links[0].x][links[0].y] == 1) { clearInterval(loop) } // collision
+    if(Gstatus[links[0].x][links[0].y] == 1) { clearInterval(loop)
+    snake.die()
+  } // collision
   } //moveSnake
 
   drawSnake(){ for(var i=0;i<this.length;i++){ this.fillSquare(links[i].x,links[i].y); } } // drawSnake
@@ -107,25 +115,30 @@ class Snake{
 
   delSquare(x,y){
     Gstatus[x][y] = 0;
-// console.log(x + ", " + y)
     ctx.fillStyle = "white";
     ctx.fillRect(x*(canvas.width/Gsize),y*(canvas.width/Gsize),canvas.width/Gsize,canvas.height/Gsize);
     ctx.stroke();
   } // delSquare
+  die(){
+    ctx.font = "30px Arial";
+ctx.fillText("Better luck next time! Press anything to replay =D",canvas.width-70,30);
+  }
 } // class sname
+
 
 var food = [];
 var foodInd = 0;
 food[foodInd] = new Food();
 var snake = new Snake();
-var loop = setInterval(draw, 1000 );
+var loop = setInterval(draw, 100 );
 function draw(){
+  score();
+
   steps++;
   if(food[foodInd].x === links[0].x && food[foodInd].y === links[0].y){
   food[foodInd].eat();
 }
   food[foodInd].show();
-  // if (steps%5==4) {snake.grow=true ; console.log("grow" + steps)} else {snake.grow=false; }
   snake.moveSnake();
   snake.drawSnake();
 // snake.update();
@@ -151,6 +164,9 @@ document.onclick = function(){
 } else{
   loop = setInterval(draw,100)
 }
+}
+function score(){
+document.getElementById("score").innerHTML =  "Score: "+ (snake.length-3).toString();
 }
 </script>
 </body>
