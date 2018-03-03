@@ -1,0 +1,338 @@
+
+  <!DOCTYPE HTML>
+<head>
+ <meta charset="UTF-8">
+ <style type="text/css">
+ canvas{
+   border:3px solid #d3d3d3;
+   position: absolute;
+   background-image: url("sky.jpg");
+ }
+ #death{
+   position: absolute;
+   top:20px;
+   left: 20px;
+   display: none;
+ }
+ </style>
+</head>
+
+<body>
+<h1 id = "death">You didnt get through your period!</h1>
+
+  <canvas id="myCanvas">
+<img src = "platform.jpg" id = "platform">
+<img src = "jetpack.png" id = "jetpack"> </img>
+<img src = "flame.png" id = "fire"></img>
+<img src = "sky.jpg" id = "background">
+<img src = "char0.png" id = "char0"></img>
+<img src = "char1.png" id = "char1"></img>
+<img src = "char2.png" id = "char2"></img>
+<img src = "char3.png" id = "char3"></img>
+
+<img src = "spikes.png" id = "spikes">
+
+
+<img src = "icon0.png" id = "icon0">
+<img src = "icon1.png" id = "icon1">
+<img src = "icon2.png" id = "icon2">
+<img src = "icon3.png" id = "icon3">
+<img src = "icon4.png" id = "icon4">
+<img src = "icon5.png" id = "icon5">
+
+<img src = "info0.png" id = "info0">
+<img src = "info1.png" id = "info1">
+<img src = "info2.png" id = "info2">
+<img src = "info3.png" id = "info3">
+<img src = "info4.png" id = "info4">
+<img src = "info5.png" id = "info5">
+
+<script type="text/javascript">
+"use strict";
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+canvas.width = screen.width * 0.9;
+canvas.height = screen.height * 0.8;
+canvas.style["background-size"] = canvas.width + "px " + canvas.height + "px";
+var char = [];
+char[0] = document.getElementById("char0")
+char[1] = document.getElementById("char1")
+char[2] = document.getElementById("char2")
+char[3] = document.getElementById("char3");
+
+var icons = [];
+icons[0] = document.getElementById("icon0");
+icons[1] = document.getElementById("icon1");
+icons[2] = document.getElementById("icon2");
+icons[3] = document.getElementById("icon3");
+icons[4] = document.getElementById("icon4");
+icons[5] = document.getElementById("icon5");
+
+var info = [];
+info[0] = document.getElementById("info0")
+info[1] = document.getElementById("info1")
+info[2] = document.getElementById("info2")
+info[3] = document.getElementById("info3")
+info[4] = document.getElementById("info4")
+info[5] = document.getElementById("info5")
+
+
+
+
+var background = document.getElementById("background")
+var jetpack = document.getElementById("jetpack");
+var fire = document.getElementById("fire");
+var platform = document.getElementById("platform");
+var looping = true;
+function createVector(x1,y1){
+  this.x = x1;
+  this.y = y1;
+}
+
+
+class Player{
+  constructor(){
+this.hasFuel = true;
+    this.frame  = 0;
+    this.x = 100;
+    this.y = 100;
+    this.r = 10;
+
+    this.velocity = 1;
+    this.gravity =  0.4;
+    this.jetpack = 0;
+  }
+  position(){
+      if(this.jetpack !=0){
+        this.frame = 0;
+      }
+    }
+  edges(){
+    if(player.y <= 18 && player.y){
+      player.y = 19;
+      this.velocity = 1;
+      this.jetpack = 0;
+    }
+    if(player.y + 56.3 >= canvas.height-20){
+      ctx.font = "20px Georgia";
+ctx.fillText("323232",30,30)
+      clearInterval(loop);
+
+
+    }
+  }
+
+  show(){
+
+
+    if(player.jetpack !=0){
+      ctx.drawImage(fire,this.x - 21,this.y +44,fire.width/14,fire.height/14);
+    }
+ctx.drawImage(jetpack,this.x - this.r * 2 + 3,this.y,jetpack.width/8,jetpack.height/8);
+ctx.drawImage(char[this.frame],this.x,this.y,40.1,56.3)
+
+
+
+  }
+  update(){
+    this.velocity +=this.jetpack;
+    this.velocity += this.gravity;
+    this.y +=this.velocity;
+  }
+  fly(){
+    if(this.hasFuel){
+        player.jetpack =  -0.75;
+} else{
+  player.jetpack = 0;
+    player.frame = 3;
+}
+  }
+}
+var active = [];
+for(var i=0;i<icons.length;i++){
+  active[i] = 1;
+}
+class Platform{
+  constructor(){
+    this.x  = Math.random() * (canvas.width * 3);
+ this.y = (Math.random() *(canvas.height * (3/4)) + canvas.height/5);
+ this.w = (Math.random() *450) + 150;
+ this.h = 60;
+ this.iconDisplay = true;
+ this.icon = Math.floor((Math.random() * icons.length )) ;
+if(this.icon >= 3){
+  this.earn = -30;
+
+}else if(this.icon <= 2){
+  this.earn = 30;
+
+}
+  }
+  collect(){
+    var cnt = 0;
+    if(player.x > this.x + this.w/3 && player.x < this.x + this.w - this.w/2.5  && player.y - 56.3 <=this.y && this.y-56.3  - player.y < 55){
+      if(this.iconDisplay){
+      fuel.fuelAmt+=this.earn;
+      }
+      if(active[this.icon] === 1 ){
+        ctx.drawImage(info[this.icon],player.x,player.y-100,500,350)
+        looping  = false;
+        clearInterval(loop);
+        active[this.icon] =0;
+      }
+this.iconDisplay = false;
+
+
+    }
+  }
+
+  offScreen(){
+    this.icon = Math.round((Math.random() * (icons.length-1))) ;
+    if(this.icon >= 3){
+      this.earn = -30;
+
+    }else if(this.icon <= 2){
+      this.earn = 30;
+
+    }
+
+    this.iconDisplay = true;
+    this.x  = Math.random() * (canvas.width * 2) + canvas.width;
+ this.y = (Math.random() *(canvas.height * (3/4)) + canvas.height/5);
+ this.w = (Math.random() *450) + 150;
+  }
+   ball(){
+     if(player.x > this.x - 15 && player.x < this.x + this.w && this.y - 56.3 <= player.y && ((player.y + 56.3)-this.y) <  player.velocity+1 ){
+if(cnt % 20 === 0){
+  player.frame = 1;
+} else if (cnt % 20 == 10){
+  player.frame  = 2;
+
+}
+cnt+=1;
+
+   player.y = this.y - 56.3;
+   player.gravity = 0;
+   player.jetpack = 0;
+      player.velocity = 0;
+} else{
+   player.gravity = 0.4;
+
+}
+   }
+  show(){
+    if(this.iconDisplay){
+ctx.drawImage(icons[this.icon],this.x + this.w/2 - 60,this.y - 60,60,60)
+}
+ctx.drawImage(platform,this.x,this.y,this.w,this.h)
+  }
+  update(){
+    this.x-=5;
+  }
+}
+class Fuel{
+constructor(){
+  this.x = 20;
+  this.y = 20;
+  this.max = 300;
+  this.fuelAmt = this.max/2;
+}
+bar(){
+  ctx.rect(this.x, this.y, this.max, 10);
+ctx.stroke();
+ctx.fillRect(this.x,this.y,this.fuelAmt,10);
+}
+update(){
+  if(this.fuelAmt>this.max){
+    this.fuelAmt = this.max;
+  }
+  if(this.fuelAmt<=0){
+    this.fuelAmt = 0;
+player.hasFuel = false;
+} else{
+  player.hasFuel = true;
+}
+}
+}
+var fuel = new Fuel();
+var platformCnt = 6;
+var platforms = [];
+for(var i=0;i<platformCnt;i++){
+  platforms[i] = new Platform();
+}
+
+for(var i=0;i<platformCnt;i++){
+
+}
+
+var player = new Player();
+
+document.onmousedown = function() {
+  fuel.fuelAmt-=2;
+  player.fly();
+  if(!looping){
+    loop = setInterval(draw,20)
+    looping = true;
+  }
+}
+document.onmouseup = function() {
+  player.jetpack = 0;
+    player.frame = 3;
+}
+
+
+
+
+
+
+function clear(){
+ctx.drawImage(background,0,0,canvas.width,canvas.height);
+}
+
+function conditional(){
+  if(player.y <=    player.r * 2 || player.y + 56.3 > canvas.height - 20){
+    player.edges();
+  }
+  for(var i=0;i<platformCnt;i++){
+    if(platforms[i].x < - platforms[i].w){
+      platforms[i].offScreen();
+    }
+  }
+}
+
+function spikes(){
+  var spike = document.getElementById("spikes");
+  for(var i=0;i<=canvas.width;i+=60){
+    ctx.drawImage(spike,i,canvas.height-20,60,20)
+  }
+}
+
+
+
+var cnt = 0;
+var loop =   setInterval(draw,20);
+function draw(){
+  conditional();
+  clear();
+  fuel.update();
+
+  fuel.bar();
+player.position();
+player.show();
+player.update();
+for(var i=0;i<platformCnt;i++){
+  platforms[i].show();
+  platforms[i].update();
+  platforms[i].ball();
+  platforms[i].collect();
+
+}
+spikes();
+
+
+}
+
+
+</script>
+</body>
+</html>
