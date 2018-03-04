@@ -32,6 +32,9 @@
 
 <img src = "spikes.png" id = "spikes">
 
+<img  src = "win.jpg" id = "win">
+<img  src = "lose.jpg" id = "lose">
+
 
 <img src = "icon0.png" id = "icon0">
 <img src = "icon1.png" id = "icon1">
@@ -77,7 +80,8 @@ info[4] = document.getElementById("info4")
 info[5] = document.getElementById("info5")
 
 
-
+var win = document.getElementById("win");
+var lose = document.getElementById("lose");
 
 var background = document.getElementById("background")
 var jetpack = document.getElementById("jetpack");
@@ -113,13 +117,7 @@ this.hasFuel = true;
       this.velocity = 1;
       this.jetpack = 0;
     }
-    if(player.y + 56.3 >= canvas.height-20){
-      ctx.font = "20px Georgia";
-ctx.fillText("323232",30,30)
-      clearInterval(loop);
 
-
-    }
   }
 
   show(){
@@ -235,7 +233,7 @@ constructor(){
   this.x = 20;
   this.y = 20;
   this.max = 300;
-  this.fuelAmt = this.max/2;
+  this.fuelAmt = this.max;
 }
 bar(){
   ctx.rect(this.x, this.y, this.max, 10);
@@ -243,6 +241,9 @@ ctx.stroke();
 ctx.fillRect(this.x,this.y,this.fuelAmt,10);
 }
 update(){
+  if(mousedown){
+    this.fuelAmt--;
+  }
   if(this.fuelAmt>this.max){
     this.fuelAmt = this.max;
   }
@@ -266,9 +267,9 @@ for(var i=0;i<platformCnt;i++){
 }
 
 var player = new Player();
-
+var mousedown = false;
 document.onmousedown = function() {
-  fuel.fuelAmt-=2;
+mousedown = true;
   player.fly();
   if(!looping){
     loop = setInterval(draw,20)
@@ -276,6 +277,7 @@ document.onmousedown = function() {
   }
 }
 document.onmouseup = function() {
+  mousedown = false;
   player.jetpack = 0;
     player.frame = 3;
 }
@@ -308,10 +310,23 @@ function spikes(){
 }
 
 
+function timer(){
+  ctx.font = "30px Arial";
+ctx.fillText(Math.round(time),500,40)
+}
+function checkWin(){
+  if(Math.round(time)<= 0){
+    ctx.drawImage(win,0,0,canvas.width,canvas.height);
+    clearInterval(loop);
+  }
+}
 
 var cnt = 0;
+var time = 20;
 var loop =   setInterval(draw,20);
 function draw(){
+
+  time -=0.02;
   conditional();
   clear();
   fuel.update();
@@ -327,11 +342,16 @@ for(var i=0;i<platformCnt;i++){
 }
 for(var i=0;i<platformCnt;i++){
   platforms[i].collect();
-  
 }
 spikes();
 
 
+if(player.y + 56.3 >= canvas.height-20){
+ctx.drawImage(lose,0,0,canvas.width,canvas.height);
+  clearInterval(loop);
+}
+timer();
+checkWin();
 }
 
 
