@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<head>
+ <meta charset="UTF-8">
+ <style type="text/css">
+#myCanvas{
+  border:3px solid #d3d3d3;
+  position: absolute;
+}
+.hide{
+  display:none;
+}
+
+ </style>
+</head>
+<body>
+<img id = "X" src = "X.png" class = "hide"></img>
+<img id = "O"src = "O.png" class = "hide"></img>
+  <canvas id="myCanvas" width="530" height="500">
+<script type="text/javascript">
+"use strict";
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+canvas.height= screen.height * 0.8;
+canvas.width = canvas.height;
+var X = document.getElementById("X")
+var O = document.getElementById("O")
+var stats = [];
+for(var p=0;p<9;p++){
+  stats[p] = "E"; //initialize to emptE
+}
+  ctx.beginPath();
+for(var i=0;i<canvas.width;i+=canvas.width/3){
+  ctx.moveTo(i, 0);
+
+  ctx.lineTo(i, canvas.height);
+  ctx.stroke();
+}
+for(var i=0;i<canvas.height;i+=canvas.height/3){
+  ctx.moveTo(0, i);
+
+  ctx.lineTo( canvas.width,i);
+  ctx.stroke();
+}
+var cnt = 0;
+document.onclick = function(e){
+
+  var x = Math.floor(e.clientX/(canvas.width/3))   * canvas.width/3;
+  var y = Math.floor(e.clientY/(canvas.width/3)) * canvas.height/3 ;
+  var active = (y/(canvas.width/3)*3) + x/(canvas.width/3) // get number of pressed square
+if(stats[active] =="E"){
+  if(cnt % 2 === 0 ){ // if O
+stats[active] = "O";
+    ctx.drawImage(O,x,y,canvas.width/3.5,canvas.height/3.5);
+  }else{ // if X if (cnt % 2 === 1){
+    stats[active] = "X";
+    ctx.drawImage(X,x,y,canvas.width/3.5,canvas.height/3.5);
+  }
+  console.log(stats)
+  cnt++;
+} else{
+  alert("That square is taken!")
+}
+
+}
+
+
+</script>
+</body>
+</html>
