@@ -1,0 +1,193 @@
+<!DOCTYPE HTML>
+<head>
+ <meta charset="UTF-8">
+ <style type="text/css">
+img{
+  display:none;
+}
+ #image{
+   width: 400px;
+   height: 200px;
+  display:block;
+position: absolute;
+top: 50px;
+left: 450px;
+}
+
+canvas{
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  border: none;
+}
+#date{
+  position: absolute;
+  top: 440px;
+  left: 230px;
+}
+#height{
+  position: absolute;
+  top: 190px;
+  left: -7px;
+transform: rotate(270deg)
+}
+h3{
+  position: absolute;
+left: 200px;
+}
+ </style>
+</head>
+<body>
+<img id = "image"/>
+<h3>Height of Plants</h3>
+<p id = "date">Days</p>
+<p id = "height">Height (cm)</p>
+
+<canvas id="canvas" width="400" height="400"></canvas>
+
+
+<img src = "c0.png" id = "c0"/>
+<img src = "c1.png" id = "c1"/>
+<img src = "c2.png" id = "c2"/>
+<img src = "c3.png" id = "c3"/>
+<img src = "c4.png" id = "c4"/>
+<img src = "c5.png" id = "c5"/>
+<img src = "c6.png" id = "c6"/>
+<img src = "c7.png" id = "c7"/>
+<img src = "c8.png" id = "c8"/>
+
+<img src = "e0.png" id = "e0"/>
+<img src = "e1.png" id = "e1"/>
+<img src = "e2.png" id = "e2"/>
+<img src = "e3.png" id = "e3"/>
+<img src = "e4.png" id = "e4"/>
+<img src = "e5.png" id = "e5"/>
+<img src = "e6.png" id = "e6"/>
+<img src = "e7.png" id = "e7"/>
+<img src = "e8.png" id = "e8"/>
+
+<script type="text/javascript">
+
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+var size = canvas.width / 15;
+var cimg = [];
+var eimg = []
+for(var p=0;p<9;p++){
+  cimg[i] = document.getElementById("c" + i)
+}
+for(var t=0;t<9;t++){
+eimg[t] = document.getElementById("e" + t)
+}
+
+var image = document.getElementById("image");
+image.left = canvas.width + "px";
+
+for(var i=size;i<canvas.width;i+=size){
+  ctx.moveTo(i,0);
+  ctx.lineTo(i,canvas.height -size);
+  ctx.stroke();
+  ctx.font = "15px Arial";
+  ctx.fillText(Math.round(i/size) ,i-5 + size,canvas.height-3);
+}
+
+for(var j=0;j<canvas.height;j+=size){
+    ctx.strokeStyle = "#000000";
+  ctx.moveTo(size,j);
+  ctx.lineTo(canvas.width,j);
+  ctx.stroke();
+  ctx.font = "15px Arial";
+ctx.fillText(Math.abs(Math.round(j/size) - 14),6,j);
+}
+function point(points ,date){
+  this.points = points;
+  this.date = date;
+
+}
+
+class Experimental{
+  constructor(){
+  this.data   = new point([0, 0.25, 3.875, 4.85, 6.8, 6.8, 7.8, 8.8, 11.8], ["1/16/18","1/18/18", "1/23/18", "1/25/18", "1/30/18", "2/1/18", "2/6/18", "2/15/18", "2/27/18"])
+this.x = [];
+this.y = [];
+}
+check(x,y){
+  for(var i=0;i<9;i++){
+    this.diffX = Math.abs(x-this.x[i]);
+    this.diffY = Math.abs(y-this.y[i]);
+      if( Math.sqrt((this.diffX*this.diffX) + (this.diffY * this.diffY)) < 20 ){
+image.src = "e" + i + ".png";
+}
+}
+}
+  graph(){
+for(var i=0; i< this.data.points.length; i++){
+  if( i < 8){
+    ctx.stroke();
+  ctx.moveTo((i * size)-2 + 3 + size,(-this.data.points[i]*size) + canvas.height-27);
+  ctx.lineTo(((i+1) * size)-2 + size,(-this.data.points[i+1]*size) + canvas.height-size )
+  ctx.stroke();
+}
+  ctx.fillStyle = "red";
+  this.x.push((i * size)-3 + size);
+  this.y.push((-this.data.points[i]*size) + canvas.height-27)
+ctx.fillRect((i * size)-3 + size,(-this.data.points[i]*size) + canvas.height-27,6,6);
+}
+}
+}
+
+
+
+class Control{
+  constructor(){
+    this.x = [];
+    this.y = [];
+  this.data   = new point([0,2.5,4,5.5,6,6,6.35,10,12.5], ["1/16/18","1/18/18", "1/23/18", "1/25/18", "1/30/18", "2/1/18", "2/6/18", "2/15/18", "2/27/18"])
+
+}
+check(x,y){
+  for(var i=0;i<9;i++){
+    this.diffX = Math.abs(x-this.x[i]);
+    this.diffY = Math.abs(y-this.y[i]);
+      if( Math.sqrt((this.diffX*this.diffX) + (this.diffY * this.diffY)) < 20 ){
+image.src = "c" + i + ".png";
+}
+}
+}
+  graph(){
+for(var i=0; i< this.data.points.length; i++){
+  if( i < 8){
+    ctx.stroke();
+  ctx.moveTo((i * size)-2 + 3 + size,(-this.data.points[i]*size) + canvas.height-27);
+  ctx.lineTo(((i+1) * size)-2 + size,(-this.data.points[i+1]*size) + canvas.height-size )
+  ctx.stroke();
+
+}
+
+  ctx.fillStyle = "blue";
+  this.x.push((i * size)-3 + size);
+  this.y.push((-this.data.points[i]*size) + canvas.height-27)
+ctx.fillRect((i * size)-3 + size,(-this.data.points[i]*size) + canvas.height-27,6,6);
+}
+}
+}
+
+
+var control = new Control();
+control.graph();
+var experimental = new Experimental();
+experimental.graph();
+setInterval(function(){
+  experimental.check(mouseX,mouseY)
+  control.check(mouseX,mouseY)
+}, 20)
+var mouseX = 0;
+var mouseY = 0;
+
+onmousemove = function(e){
+mouseX = e.clientX - 50;
+mouseY = e.clientY - 50;
+}
+</script>
+</body>
+</html>
