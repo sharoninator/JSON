@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+canvas{
+}
+</style>
+<body>
+
+<canvas id="myCanvas" width="500px" height="500px" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.</canvas>
+
+<script>
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+
+class Robot{
+  constructor(){
+    this.x = 200;
+    this.y  = 200;
+    this.velX = 0;
+    this.velY = 0;
+    this.gravity = 0.3;
+  }
+  fly(mouseX,mouseY){
+    this.velX += (mouseX - this.x)/150;
+    this.velY  += (mouseY - this.y )/150;
+
+  this.velX -= this.velX/30
+  this.velY -= this.velY/30
+
+
+  }
+  update(){
+    if(Math.abs(this.velX) > 10){
+if(this.velX < 10){
+  this.velX = -10;
+} else{
+  this.velX = 10;
+}
+    }
+    if(Math.abs(this.velY) > 20){
+      console.log(this.velY)
+if(this.velY < 20){
+  this.velY = -20;
+} else{
+  this.velY = 20;
+}
+    }
+    this.velY+=this.gravity;
+
+    this.x+=this.velX;
+    this.y+=this.velY;
+
+  }
+  show(){
+    ctx.fillStyle = "black";
+    ctx.fillRect(this.x, this.y, 20, 20);
+  }
+}
+var mouseDown = false;
+var mouseX;
+var mouseY;
+document.body.onmousedown = function(e) {
+mouseDown  = true;
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+}
+document.onmousemove = function(e){
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+}
+document.body.onmouseup = function() {
+  mouseDown = false;
+  console.log("ro")
+}
+function clear(){
+  ctx.fillStyle = "white"
+  ctx.fillRect(0,0,canvas.width,canvas.height)
+}
+
+var robot = new Robot();
+var loop = setInterval(draw,20)
+
+function draw(){
+  clear();
+
+if(mouseDown){
+  robot.fly(mouseX,mouseY)
+
+}
+robot.update();
+
+  robot.show();
+}
+
+
+</script>
+
+</body>
+</html>
