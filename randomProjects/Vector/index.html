@@ -20,9 +20,12 @@ class Robot{
     this.y  = 200;
     this.velX = 0;
     this.velY = 0;
-    this.gravity = 0.3;
+    this.gravity = 0.2;
   }
   fly(mouseX,mouseY){
+    if(Math.abs(mouseX - this.x) > 100){
+
+    }
     this.velX += (mouseX - this.x)/150;
     this.velY  += (mouseY - this.y )/150;
 
@@ -32,19 +35,18 @@ class Robot{
 
   }
   update(){
-    if(Math.abs(this.velX) > 10){
-if(this.velX < 10){
-  this.velX = -10;
+    if(Math.abs(this.velX) > 7){
+if(this.velX < 0){
+  this.velX = -7;
 } else{
-  this.velX = 10;
+  this.velX = 7;
 }
     }
-    if(Math.abs(this.velY) > 20){
-      console.log(this.velY)
-if(this.velY < 20){
-  this.velY = -20;
+    if(Math.abs(this.velY) > 7){
+if(this.velY < 0){
+  this.velY = -7;
 } else{
-  this.velY = 20;
+  this.velY = 7;
 }
     }
     this.velY+=this.gravity;
@@ -59,8 +61,8 @@ if(this.velY < 20){
   }
 }
 var mouseDown = false;
-var mouseX;
-var mouseY;
+var mouseX = 0;
+var mouseY = 0;
 document.body.onmousedown = function(e) {
 mouseDown  = true;
   mouseX = e.clientX;
@@ -72,7 +74,45 @@ document.onmousemove = function(e){
 }
 document.body.onmouseup = function() {
   mouseDown = false;
-  console.log("ro")
+}
+document.onkeydown = function(key){
+  console.log("re ewew")
+  if(key.keyCode == 37){
+    mouseDown = true;
+    mouseX  = robot.x - 200;
+  }
+  if(key.keyCode == 39){
+    mouseDown = true;
+    mouseX  = robot.x + 200;
+  }
+  if(key.keyCode == 38){
+    mouseDown = true;
+    mouseY  = robot.y - 200;
+  }
+  if(key.keyCode == 40){
+    mouseDown = true;
+    mouseY  = robot.y + 200;
+  }
+
+}
+document.onkeyup = function(key){
+  if(key.keyCode == 40){
+mouseY = robot.y;
+}
+
+if(key.keyCode == 38){
+  mouseY = robot.y;
+}
+  if(key.keyCode == 39){
+    mouseX = robot.x
+  }
+  if(key.keyCode == 37){
+mouseX = robot.x
+  }
+
+
+
+  mouseDown = false;
 }
 function clear(){
   ctx.fillStyle = "white"
@@ -90,7 +130,6 @@ if(mouseDown){
 
 }
 robot.update();
-
   robot.show();
 }
 
