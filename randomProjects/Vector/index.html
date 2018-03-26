@@ -13,7 +13,6 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 <script>
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
-
 class Robot{
   constructor(){
     this.x = 200;
@@ -35,18 +34,18 @@ class Robot{
 
   }
   update(){
-    if(Math.abs(this.velX) > 7){
+    if(Math.abs(this.velX) > 10){
 if(this.velX < 0){
-  this.velX = -7;
+  this.velX = -10;
 } else{
-  this.velX = 7;
+  this.velX = 10;
 }
     }
-    if(Math.abs(this.velY) > 7){
+    if(Math.abs(this.velY) > 10){
 if(this.velY < 0){
-  this.velY = -7;
+  this.velY = -10;
 } else{
-  this.velY = 7;
+  this.velY = 10;
 }
     }
     this.velY+=this.gravity;
@@ -59,12 +58,32 @@ if(this.velY < 0){
     ctx.fillStyle = "black";
     ctx.fillRect(this.x, this.y, 20, 20);
   }
+  edges(){
+    if (robot.x + 20> canvas.width) {
+  this.velX  = - this.velX;
+  robot.x  = canvas.width-20
+    }
+    if(robot.x < 0){
+      robot.x = 0;
+      this.velX  = - this.velX;
+    }
+    if(robot.y + 20 > canvas.height){
+      this.velY = -this.velY;
+      robot.y = canvas.height - 20;
+    }
+    if(robot.y < 0){
+this.velY = - this.velY;
+robot.y = 20;
+    }
+  }
 }
-var mouseDown = false;
+var flying = false;
 var mouseX = 0;
 var mouseY = 0;
+
+
 document.body.onmousedown = function(e) {
-mouseDown  = true;
+flying  = true;
   mouseX = e.clientX;
   mouseY = e.clientY;
 }
@@ -73,24 +92,27 @@ document.onmousemove = function(e){
   mouseY = e.clientY;
 }
 document.body.onmouseup = function() {
-  mouseDown = false;
+  flying = false;
 }
+
 document.onkeydown = function(key){
+  mouseX = robot.x;
+  mouseY = robot.y;
   console.log("re ewew")
   if(key.keyCode == 37){
-    mouseDown = true;
+    flying = true;
     mouseX  = robot.x - 200;
   }
   if(key.keyCode == 39){
-    mouseDown = true;
+    flying = true;
     mouseX  = robot.x + 200;
   }
   if(key.keyCode == 38){
-    mouseDown = true;
+    flying = true;
     mouseY  = robot.y - 200;
   }
   if(key.keyCode == 40){
-    mouseDown = true;
+    flying = true;
     mouseY  = robot.y + 200;
   }
 
@@ -111,8 +133,7 @@ mouseX = robot.x
   }
 
 
-
-  mouseDown = false;
+  flying = false;
 }
 function clear(){
   ctx.fillStyle = "white"
@@ -125,11 +146,13 @@ var loop = setInterval(draw,20)
 function draw(){
   clear();
 
-if(mouseDown){
+
+if(flying){
   robot.fly(mouseX,mouseY)
 
 }
 robot.update();
+robot.edges();
   robot.show();
 }
 
