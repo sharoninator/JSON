@@ -13,11 +13,6 @@ position: absolute;
 top: 50px;
 left: 450px;
 }
-  #info{
-  position: absolute;
-  top: 300px;
-   left: 450px;
-  }
 canvas{
   position: absolute;
   top: 50px;
@@ -74,6 +69,9 @@ left: 200px;
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 var size = canvas.width / 15;
+var notes = ["We added the seeds, and added 5 mL of Zinc", "No Experimental seeds have grown yet, Control is sprouting.", "Experimental has begun to sprout, Has red rim around leaves. Experimental zinc levels also appear to have raised. Control is doing great.", "Experimental is doing great, there seems to be some white residue on the dirt of both plants, but it looks natural.", "Both plants are beginning to flower, from the stem between the leaves of each plant. Experimental is blooming, more are growing.", " Experimental plantd are visibly begginigng to flower, and have an abundance of leaves. Their stems can no longer fully support their weight, so they falter and lean on the dirt or container.",  "Mold is beginning to appear on the surface of the dirt of both plants. The experimental is growing primarily in quantity, while the control  is in a later stage than the experimental is.", "The experimental plant is growing leaves with a different structure. Two plants were cut off about 1.5 inches from the stem, but they are still alive.", "Lost 2 leaves on the experimental, and some wilting around the stems. They seem to be dying."]
+
+
 var cimg = [];
 var eimg = []
 for(var p=0;p<9;p++){
@@ -114,9 +112,9 @@ check(x,y){
     this.diffX = Math.abs(x-this.x[i]);
     this.diffY = Math.abs(y-this.y[i]);
       if( Math.sqrt((this.diffX*this.diffX) + (this.diffY * this.diffY)) < 20 ){
-      if(i == 0){
-      document.getElementById("info").innerHTML = "We added the seeds and 5 mL of Zinc"
-      }
+     
+      document.getElementById("info").innerHTML = notes[i]
+      
 image.src = "e" + i + ".png";
 }
 }
@@ -147,9 +145,7 @@ check(x,y){
     this.diffX = Math.abs(x-this.x[i]);
     this.diffY = Math.abs(y-this.y[i]);
       if( Math.sqrt((this.diffX*this.diffX) + (this.diffY * this.diffY)) < 20 ){
-      if(i == 0){
-      document.getElementById("info").innerHTML = "We added the seeds and 5 mL of Zinc"
-      }
+       document.getElementById("info").innerHTML = notes[i]
 image.src = "c" + i + ".png";
 }
 }
