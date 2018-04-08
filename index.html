@@ -1,1 +1,24 @@
-{"filter":false,"title":"[P] /client/index.html","undoManager":{"mark":-1,"position":-1,"stack":[]},"preview":{"path":"/client/index.html","previewer":"preview.browser"},"timestamp":1520979732772,"hash":"da39a3ee5e6b4b0d3255bfef95601890afd80709"}
+var ans  = "";
+var url;
+var name = prompt("Username: ");
+var key = prompt("Trigger key to message:");
+document.onkeydown = function(e){
+if(e.key == key){url  = "http://socket-gorgamite.c9users.io?name=" +name +  "&msg=" + prompt("Message:");}};
+var request = new XMLHttpRequest();
+var loop = setInterval(function(){ 
+  request.open('GET', url);
+  if (url.indexOf("?")>-1){
+  ans = "old"
+  url = url.substring(0,url.indexOf("?"))}
+  request.responseType = 'json';
+  request.send();
+},1000);
+request.onload = function(){
+if(ans == "old"){
+ans = request.response.msg[4];
+} 
+if(ans!=request.response.msg[4]){
+alert(request.response.msg);
+ans = request.response.msg[4];
+}
+}
