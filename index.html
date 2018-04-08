@@ -3,13 +3,15 @@ var url;
 var name = prompt("Username: ");
 var key = prompt("Trigger key to message:");
 document.onkeydown = function(e){
-if(e.key == key){url  = "http://socket-gorgamite.c9users.io?name=" +name +  "&msg=" + prompt("Message:");}};
+if(e.key == key){url  = "http://socket-gorgamite.c9users.io?name=" +name +  "&msg=" + prompt("Message:");
+}
+};
 var request = new XMLHttpRequest();
 var loop = setInterval(function(){ 
   request.open('GET', url);
   if (url.indexOf("?")>-1){
-  ans = "old"
-  url = url.substring(0,url.indexOf("?"))}
+  ans = "old";
+  url = url.substring(0,url.indexOf("?"));}
   request.responseType = 'json';
   request.send();
 },1000);
