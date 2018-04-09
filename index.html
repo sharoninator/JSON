@@ -1,11 +1,10 @@
 var ans  = "";
-var url;
+var url = "";
+var msgs;
 var name = prompt("Username: ");
 var key = prompt("Trigger key to message:");
 document.onkeydown = function(e){
-if(e.key == key){url  = "http://socket-gorgamite.c9users.io?name=" +name +  "&msg=" + prompt("Message:");
-}
-};
+if(e.key == key){url  = "http://socket-gorgamite.c9users.io?name=" +name +  "&msg=" + prompt(msgs.join() + "\nMessage:");}};
 var request = new XMLHttpRequest();
 var loop = setInterval(function(){ 
   request.open('GET', url);
@@ -16,11 +15,9 @@ var loop = setInterval(function(){
   request.send();
 },1000);
 request.onload = function(){
+msgs = request.response.msg;
 if(ans == "old"){
-ans = request.response.msg[4];
-} 
+ans = request.response.msg[4];} 
 if(ans!=request.response.msg[4]){
 alert(request.response.msg);
-ans = request.response.msg[4];
-}
-}
+ans = request.response.msg[4];}}
