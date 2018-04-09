@@ -4,7 +4,7 @@ var msgs;
 var name = prompt("Username: ");
 var key = prompt("Trigger key to message:");
 document.onkeydown = function(e){
-if(e.key == key){url  = "http://socket-gorgamite.c9users.io?name=" +name +  "&msg=" + prompt(msgs.join() + "\nMessage:");}};
+if(e.key == key){url  = "http://socket-gorgamite.c9users.io?name=" +name +  "&msg=" + prompt(msgs + "\nMessage:");}};
 var request = new XMLHttpRequest();
 var loop = setInterval(function(){ 
   request.open('GET', url);
