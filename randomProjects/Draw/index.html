@@ -95,7 +95,9 @@ if(this.eraser){
   square(){
     var x = Math.floor(mouseX/Gsize) * Gsize;
     var y = Math.floor(mouseY/Gsize) * Gsize;
-   gridArr.push([x,y]);
+ if(gridArr.indexOf([x/Gsize, y/Gsize]) < 0){
+   gridArr.push([x/Gsize,y/Gsize]);
+ }
     if(this.eraser){
       ctx.fillStyle = "#ffffff";
     } else{
