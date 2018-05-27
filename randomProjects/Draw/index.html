@@ -73,6 +73,7 @@ transition: background-color 1.2s;
   <canvas id="myCanvas" width="450" height="450"> </canvas>
 
 <script type="text/javascript">
+ var gridArr = [];
 var isGrid = confirm("Would you like a grid on your canvas?");
 var color = document.getElementById("color").value;
 var canvas = document.getElementById("myCanvas");
@@ -94,6 +95,7 @@ if(this.eraser){
   square(){
     var x = Math.floor(mouseX/Gsize) * Gsize;
     var y = Math.floor(mouseY/Gsize) * Gsize;
+   gridArr.push([x,y]);
     if(this.eraser){
       ctx.fillStyle = "#ffffff";
     } else{
