@@ -65,6 +65,7 @@ transition: background-color 1.2s;
  </style>
 </head>
 <body>
+ <p id = "grid"></p>
   <button onclick = "location.reload()" id = "reset">Reset</button>
   <img src = "marker.png" id = "marker" onclick = "grid.eraser = false">
   <img src = "eraser.png" id = "eraser" onclick = "grid.erase()">
@@ -95,13 +96,19 @@ if(this.eraser){
   square(){
     var x = Math.floor(mouseX/Gsize) * Gsize;
     var y = Math.floor(mouseY/Gsize) * Gsize;
+   document.getElementById("grid").innerHTML = "[";
    let hasValue = false;
 for(var i=0;i<gridArr.length;i++){
 if(gridArr[i][0] == x/Gsize && gridArr[i][1] == y/Gsize){
  console.log(gridArr[i])
 hasValue = true;
 }
+ 
+ document.getElementById("grid").innerHTML += "[" + gridArr[i][0] + "," + gridArr[i][1] + "]";
+ 
+ 
 }
+   document.getElementById("grid").innerHTML += "]";
    if(!hasValue){
    gridArr.push([x/Gsize,y/Gsize]);
    }
