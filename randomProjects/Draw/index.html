@@ -97,7 +97,8 @@ if(this.eraser){
     var y = Math.floor(mouseY/Gsize) * Gsize;
    let hasValue = false;
 for(var i=0;i<gridArr.length;i++){
-if(gridArr[i] == [x/Gsize,y/Gsize]){
+if(gridArr[i][0] == x/Gsize && gridArr[i][1] == y/Gsize){
+ console.log(gridArr[i])
 hasValue = true;
 }
 }
