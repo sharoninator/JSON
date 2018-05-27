@@ -95,9 +95,17 @@ if(this.eraser){
   square(){
     var x = Math.floor(mouseX/Gsize) * Gsize;
     var y = Math.floor(mouseY/Gsize) * Gsize;
- if(gridArr.indexOf([x/Gsize, y/Gsize]) < 0){
+   let hasValue = false;
+for(var i=0;i<gridArr.length;i++){
+if(gridArr[i] == [x/Gsize,y/Gsize]){
+hasValue = true;
+}
+}
+   if(!hasValue){
    gridArr.push([x/Gsize,y/Gsize]);
- }
+   }
+   hasValue = false;
+ 
     if(this.eraser){
       ctx.fillStyle = "#ffffff";
     } else{
