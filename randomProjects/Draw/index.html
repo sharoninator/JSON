@@ -11,7 +11,7 @@ canvas{
   top: 100px;
   left: 100px;
 }
-#color{
+#drawType{
   position: absolute;
   left: 3px;
   top: 370px;
@@ -63,20 +63,23 @@ transition: background-color 1.2s;
  </style>
 </head>
 <body>
- <p id = "grid" style = "display: none;"></p>
+ <p id = "grid" style = "display: block; float: right; width: 50%; z-index: 9999; cursor: text;"></p>
   <button onclick = "location.reload()" id = "reset">Reset</button>
   <img src = "marker.png" id = "marker" onclick = "grid.eraser = false">
   <img src = "eraser.png" id = "eraser" onclick = "grid.erase()">
-  <input type = "color" id = "color" value = "#ff0000" onchange = "grid.getColor()">
 
+  <select id = "drawType">
+    <option value="barricades">Barricades</option>
+    <option value="nodes">Nodes</option>
+    <option value="bases">Bases</option>
+  </select>
   <canvas id="myCanvas" width="450" height="450"> </canvas>
-
 <script type="text/javascript">
- var gridArr = [];
-var isGrid = confirm("Would you like a grid on your canvas?");
-var color = document.getElementById("color").value;
+var map = {barricades: [], nodes: [],bases:[]}
+ var select = document.getElementById("drawType");
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
+var drawType = document.getElementById("drawType");
 size = 20;
 Gsize = canvas.width/size;
 var mouseX;
@@ -86,52 +89,54 @@ class Grid{
   constructor(){
     this.eraser = false;
   }
-
   square(){
-    var x = Math.floor(mouseX/Gsize) * Gsize;
-    var y = Math.floor(mouseY/Gsize) * Gsize;
-
-   
-   document.getElementById("grid").innerHTML = "[";
+let selected = select[select.selectedIndex].value;
+var x = Math.floor(mouseX/Gsize) * Gsize;
+var y = Math.floor(mouseY/Gsize) * Gsize;
    let hasValue = false;
-
      if(this.eraser){
       ctx.fillStyle = "#ffffff";
       hasValue = true;
-    } else{
-    ctx.fillStyle = color;
+    } else if (selected == "barricades"){
+    ctx.fillStyle = "pink";
+  } else if(selected == "nodes"){
+    ctx.fillStyle = "purple";
+  } else if (selected == "bases"){
+    ctx.fillStyle = "green";
   }
+for(var i=0;i<map[selected].length;i++){
+  let pos;
+if(selected != "barricades"){
+pos = map[selected][i].pos;
+} else{
+  pos = map[selected][i]
+}
 
-for(var i=0;i<gridArr.length;i++){
-if(gridArr[i][0] == x/Gsize && gridArr[i][1] == y/Gsize){
+if(pos[0] == x/Gsize && pos[1] == y/Gsize){
  if(this.eraser){
- gridArr.splice(i, 1);
+  map[selected].splice(i, 1);
  }
 hasValue = true;
 }
-if(gridArr[i][0] < 0 || gridArr[i][0] > 19 || gridArr[i][1] < 0 || gridArr[i][1] > 19){
-  gridArr.splice(i, 1);
+if(pos[0] < 0 || map[selected][i][0] > 19 || pos[1] < 0 || pos[1] > 19){
+  pos.splice(i, 1);
 }
-
 }
-   if(!hasValue){
-   gridArr.push([x/Gsize,y/Gsize]);
+   if(!hasValue && x/Gsize < 20 && x/Gsize >-1 && y/Gsize < 20 && y/Gsize >-1){
+     if(selected == "nodes"){
+       map["nodes"].push({pos: [x/Gsize, y/Gsize], energy: 0});
+     } else if (selected == "bases"){
+      map["bases"].push({pos: [x/Gsize, y/Gsize], energy: 0, id: map.bases.length});
+     }
+     else{
+       map[selected].push([x/Gsize,y/Gsize]);
+     }
    }
    hasValue = false;
- 
-
     ctx.fill();
     ctx.fillRect(x,y,Gsize,Gsize);
     ctx.stroke();
-
-for(var i=0;i<gridArr.length;i++){
-  document.getElementById("grid").innerHTML += "[" + gridArr[i][0] + "," + gridArr[i][1] + "],";
-}
-document.getElementById("grid").innerHTML += "]";
-this.drawGrid();
-  }
-  getColor(){
-    color = document.getElementById("color").value
+   document.getElementById("grid").innerHTML = "Tip: to make the game fair, have the map be symmetrical.<br>Copy the following to add as a map to Vindinium:<br><br>" + JSON.stringify(map);
   }
  drawGrid(){
    ctx.fillStyle = "black";
@@ -156,9 +161,7 @@ erase(){
   }
 }
 var grid = new Grid();
-if(isGrid){
    grid.drawGrid();
-}
 document.onmousedown = function(e){ drag = true;   mouseX = e.clientX - 100;
   mouseY =  e.clientY - 100;
   grid.square(); }
