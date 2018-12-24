@@ -72,6 +72,7 @@ transition: background-color 1.2s;
     <option value="barricades">Barricades</option>
     <option value="nodes">Nodes</option>
   </select>
+  <input type="checkbox" id = "mirror" onclick = "mirrorIt()">Mirror across Quadrants</input>
   <canvas id="myCanvas" width="450" height="450"> </canvas>
 <script type="text/javascript">
 var map = {barricades: [], nodes: []}
@@ -84,14 +85,15 @@ Gsize = canvas.width/size;
 var mouseX;
 var mouseY;
 var drag = false;
+var mirror = false;
 class Grid{
   constructor(){
     this.eraser = false;
   }
-  square(){
+  square(x, y){
+    console.log("called square at " + x + ", " + y)
 let selected = select[select.selectedIndex].value;
-var x = Math.floor(mouseX/Gsize) * Gsize;
-var y = Math.floor(mouseY/Gsize) * Gsize;
+
    let hasValue = false;
      if(this.eraser){
       ctx.fillStyle = "#ffffff";
@@ -103,6 +105,8 @@ var y = Math.floor(mouseY/Gsize) * Gsize;
   } else if (selected == "bases"){
     ctx.fillStyle = "green";
   }
+  
+  
 for(var i=0;i<map[selected].length;i++){
   let pos;
 if(selected != "barricades"){
@@ -110,8 +114,7 @@ pos = map[selected][i].pos;
 } else{
   pos = map[selected][i]
 }
-
-if(pos[0] == x/Gsize && pos[1] == y/Gsize){
+if(pos[0] == x && pos[1] == y){
  if(this.eraser){
   map[selected].splice(i, 1);
  }
@@ -121,22 +124,65 @@ if(pos[0] < 0 || map[selected][i][0] > 19 || pos[1] < 0 || pos[1] > 19){
   pos.splice(i, 1);
 }
 }
-   if(!hasValue && x/Gsize < 20 && x/Gsize >-1 && y/Gsize < 20 && y/Gsize >-1){
+   if(!hasValue && x < 20 && x >-1 && y < 20 && y >-1){
      if(selected == "nodes"){
-       map["nodes"].push({pos: [x/Gsize, y/Gsize], energy: 0});
+       map["nodes"].push({pos: [x, y], energy: 0});
      } else if (selected == "bases"){
-      map["bases"].push({pos: [x/Gsize, y/Gsize], energy: 0, id: map.bases.length});
+      map["bases"].push({pos: [x, y], energy: 0, id: map.bases.length});
      }
      else{
-       map[selected].push([x/Gsize,y/Gsize]);
-     }
+       map[selected].push([x,y]);
+    }
    }
+
    hasValue = false;
     ctx.fill();
-    ctx.fillRect(x,y,Gsize,Gsize);
+    ctx.fillRect(x*Gsize,y*Gsize,Gsize,Gsize);
     ctx.stroke();
    document.getElementById("grid").innerHTML = "Tip: to make the game fair, have the map be symmetrical.<br>Copy the following to add as a map to Vindinium:<br><br>" +JSON.stringify(map);
  grid.drawGrid();
+
+
+if(mirror){
+
+    let tmp = mirrorPos([x,y]);
+    console.log(mirrorPos[tmp[3][0],tmp[3][1]])
+    console.log("tmp is " + JSON.stringify(tmp));
+  
+
+for(let j=1;j<4;j++){
+for(var i=0;i<map[selected].length;i++){
+  let pos;
+if(selected != "barricades"){
+pos = map[selected][i].pos;
+} else{
+  pos = map[selected][i]
+}
+if(pos[0] == tmp[j][0] && pos[1] == tmp[j][1]){
+
+ if(this.eraser){
+  map[selected].splice(i, 1);
+ }
+hasValue = true;
+// alert(pos[0] +  " is equal to " + tmp[j][0]);
+}
+
+
+}
+
+if(!hasValue){
+// alert("Calling square to " +  tmp[j][0] + ", " +  tmp[j][1]);
+ grid.square(tmp[j][0], tmp[j][1]);
+
+}
+
+
+
+    }
+
+
+    
+}
   }
  drawGrid(){
    ctx.fillStyle = "black";
@@ -163,14 +209,19 @@ erase(){
 var grid = new Grid();
    grid.drawGrid();
 document.onmousedown = function(e){ drag = true;   mouseX = e.clientX - 100;
+    
   mouseY =  e.clientY - 100;
-  grid.square(); }
+  var x = Math.floor(mouseX/Gsize);
+var y = Math.floor(mouseY/Gsize);
+  grid.square(x,y); }
   document.onmouseup = function(){drag = false;}
 onmousemove = function(e){
 if(drag){
   mouseX = e.clientX - 100;
   mouseY =  e.clientY - 100;
-  grid.square();
+  var x = Math.floor(mouseX/Gsize);
+var y = Math.floor(mouseY/Gsize);
+  grid.square(x,y);
 }
 }
  
@@ -182,6 +233,26 @@ if(drag){
   alert("Copied! Make sure to put this into the maps.json file for it to be included.")
 }
  
+function mirrorIt(){
+    mirror = true;
+}
+
+
+
+   function mirrorPos(initPos) { // given a position, return an array with that position mirroed across all quadrants.
+  let arr = [];
+  arr.push(initPos)
+  let tempPos = JSON.parse(JSON.stringify(initPos));
+  tempPos[0] = Math.abs(19 - tempPos[0]);
+  arr.push(JSON.parse(JSON.stringify(tempPos)));
+  tempPos[1] = Math.abs(19 - tempPos[1]);
+  arr.push(JSON.parse(JSON.stringify(tempPos)));
+  tempPos = JSON.parse(JSON.stringify(initPos));
+  tempPos[1] = Math.abs(19 - tempPos[1]);
+  arr.push(JSON.parse(JSON.stringify(tempPos)));
+  return arr;
+}
+
 </script>
 </body>
 </html>
