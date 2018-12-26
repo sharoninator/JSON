@@ -162,6 +162,11 @@ if(pos[0] == tmp[j][0] && pos[1] == tmp[j][1]){
 
  if(this.eraser){
   map[selected].splice(i, 1);
+
+for(let k=0;k<4;k++){
+  map[selected].splice(tmp[k], 1);
+}
+
  }
 hasValue = true;
 // alert(pos[0] +  " is equal to " + tmp[j][0]);
@@ -171,8 +176,10 @@ hasValue = true;
 }
 
 if(!hasValue){
-// alert("Calling square to " +  tmp[j][0] + ", " +  tmp[j][1]);
+  if(tmp[j][0] >= 0 && tmp[j][0] <20 && tmp[j][1] >= 0 && tmp[j][1] < 20){
+alert("Calling square to " +  tmp[j][0] + ", " +  tmp[j][1]);
  grid.square(tmp[j][0], tmp[j][1]);
+  }
 
 }
 
