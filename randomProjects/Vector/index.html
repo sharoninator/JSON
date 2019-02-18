@@ -55,8 +55,8 @@ if(this.velY < 0){
 
   }
   show(){
-    ctx.fillStyle = "black";
-    ctx.fillRect(this.x, this.y, 20, 20);
+    ctx.fillStyle = "blue";
+    ctx.fillRect(this.x, this.y, 40, 40);
   }
   edges(){
     if (robot.x + 20> canvas.width) {
@@ -83,7 +83,7 @@ var mouseY = 0;
 
 
 document.body.onmousedown = function(e) {
-flying  = true;
+flying  = false;
   mouseX = e.clientX;
   mouseY = e.clientY;
 }
