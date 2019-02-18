@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+canvas{
+}
+</style>
+<body>
+
+<canvas id="myCanvas" width="500px" height="500px" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.</canvas>
+
+<script>
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+class Robot{
+  constructor(){
+    this.x = 200;
+    this.y  = 200;
+    this.velX = 0;
+    this.velY = 0;
+    this.gravity = 0.2;
+  }
+  fly(mouseX,mouseY){
+    if(Math.abs(mouseX - this.x) > 100){
+    }
+    this.velX += (mouseX - this.x)/150;
+    this.velY  += (mouseY - this.y )/150;
+  this.velX -= this.velX/30
+  this.velY -= this.velY/30
+  }
+  update(){
+    if(Math.abs(this.velX) > 10){
+if(this.velX < 0){
+  this.velX = -10;
+} else{
+  this.velX = 10;
+}
+    }
+    if(Math.abs(this.velY) > 10){
+if(this.velY < 0){
+  this.velY = -10;
+} else{
+  this.velY = 10;
+}
+    }
+    this.velY+=this.gravity;
+    this.x+=this.velX;
+    this.y+=this.velY;
+  }
+  show(){
+    ctx.fillStyle = "black";
+    ctx.fillRect(this.x, this.y, 20, 20);
+  }
+  edges(){
+    if (robot.x + 20> canvas.width) {
+  this.velX  = - this.velX;
+  robot.x  = canvas.width-20
+    }
+    if(robot.x < 0){
+      robot.x = 0;
+      this.velX  = - this.velX;
+    }
+    if(robot.y + 20 > canvas.height){
+      this.velY = -this.velY;
+      robot.y = canvas.height - 20;
+    }
+    if(robot.y < 0){
+this.velY = - this.velY;
+robot.y = 20;
+    }
+  }
+}
+var flying = false;
+var mouseX = 0;
+var mouseY = 0;
+document.body.onmousedown = function(e) {
+flying  = true;
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+}
+document.onmousemove = function(e){
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+}
+document.body.onmouseup = function() {
+  flying = false;
+}
+document.onkeydown = function(key){
+  mouseX = robot.x;
+  mouseY = robot.y;
+  console.log("re ewew")
+  if(key.keyCode == 37){
+    flying = true;
+    mouseX  = robot.x - 200;
+  }
+  if(key.keyCode == 39){
+    flying = true;
+    mouseX  = robot.x + 200;
+  }
+  if(key.keyCode == 38){
+    flying = true;
+    mouseY  = robot.y - 200;
+  }
+  if(key.keyCode == 40){
+    flying = true;
+    mouseY  = robot.y + 200;
+  }
+}
+document.onkeyup = function(key){
+  if(key.keyCode == 40){
+mouseY = robot.y;
+}
+if(key.keyCode == 38){
+  mouseY = robot.y;
+}
+  if(key.keyCode == 39){
+    mouseX = robot.x
+  }
+  if(key.keyCode == 37){
+mouseX = robot.x
+  }
+  flying = false;
+}
+function clear(){
+  ctx.fillStyle = "white"
+  ctx.fillRect(0,0,canvas.width,canvas.height)
+}
+var robot = new Robot();
+var loop = setInterval(draw,20)
+function draw(){
+  clear();
+if(flying){
+  robot.fly(mouseX,mouseY)
+}
+robot.update();
+robot.edges();
+  robot.show();
+}
+</script>
+
+</body>
+</html>
