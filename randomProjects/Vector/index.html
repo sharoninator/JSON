@@ -7,7 +7,7 @@ canvas{
 </style>
 <body>
 
-<canvas id="myCanvas" width="500px" height="500px" style="border:1px solid #d3d3d3;">
+<canvas id="myCanvas" width="800px" height="500px" style="border:1px solid #d3d3d3;">
 Your browser does not support the HTML5 canvas tag.</canvas>
 
 <script>
@@ -59,21 +59,21 @@ if(this.velY < 0){
     ctx.fillRect(this.x, this.y, 40, 40);
   }
   edges(){
-    if (robot.x + 20> canvas.width) {
+    if (robot.x + 40> canvas.width) {
   this.velX  = - this.velX;
-  robot.x  = canvas.width-20
+  robot.x  = canvas.width-40
     }
     if(robot.x < 0){
       robot.x = 0;
       this.velX  = - this.velX;
     }
-    if(robot.y + 20 > canvas.height){
+    if(robot.y + 40 > canvas.height){
       this.velY = -this.velY;
-      robot.y = canvas.height - 20;
+      robot.y = canvas.height - 40;
     }
     if(robot.y < 0){
 this.velY = - this.velY;
-robot.y = 20;
+robot.y = 40;
     }
   }
 }
